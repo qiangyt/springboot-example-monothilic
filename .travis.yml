@@ -1,0 +1,25 @@
+language: java
+jdk:
+  - openjdk11
+
+sudo: required
+
+services:
+  - docker
+
+#install:
+
+#before_install:
+
+script:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push qiangyt/monothilic-springboot-example:latest
+
+#deploy:
+#  - provider: releases # Uploads to github
+#    api_key:
+#      secure:  # See Travis CI documentation
+#    file: blash
+#    skip_cleanup: true
+#    on: # Put here conditions for deployment. 
+#      tags: true # This condition will only deploy on tagged commits.
