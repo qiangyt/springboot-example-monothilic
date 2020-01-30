@@ -18,6 +18,7 @@ import qiangyt.springboot_example.api.rest.Paths;
 import qiangyt.springboot_example.api.rnr.CreateOrderReq;
 import qiangyt.springboot_example.api.vo.OrderDetailVO;
 import qiangyt.springboot_example.api.vo.OrderVO;
+import qiangyt.springboot_example.common.rest.ExposedViaSpringfox;
 import lombok.Getter;
 
 
@@ -26,6 +27,7 @@ import lombok.Getter;
  *
  */
 @Getter
+@ExposedViaSpringfox
 @RestController
 @RequestMapping(path = Paths.Order.BASE, consumes = APPLICATION_JSON_UTF8_VALUE, produces = APPLICATION_JSON_UTF8_VALUE)
 public class OrderRestController {
