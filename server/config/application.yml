@@ -1,15 +1,46 @@
+logging:
+  level:
+    org:
+      springframework: INFO
+
+management:
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    prometheus:
+      enabled: true
+    health:
+      enabled: true
+      show-details: always
+  server:
+    port: 8081
+    address: 0.0.0.0
+
 server:
   port: 8080
 
 spring:
 
   application:
-    name: order-service
+    name: monothilic-springboot-example
   
   datasource:
     url: jdbc:mysql://mysql:3306/order_db?useSSL=false
     username: order_user
     password: order_password
 
+  http:
+    log-request-details: true
+
   jpa:
     open-in-view: false
+
+springfox:
+  documentation:
+    auto-startup: true
+    swagger:
+      v2:
+        path: /swagger-2.0.json

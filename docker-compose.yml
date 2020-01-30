@@ -11,7 +11,7 @@ services:
       - MYSQL_USER=order_user
       - MYSQL_PASSWORD=order_password
     volumes:
-      - ../../tmp/mysql:/var/lib/mysql
+      - ./tmp/mysql:/var/lib/mysql
     container_name: qiangyt-monothilic-springboot-example.mysql
 
   server:

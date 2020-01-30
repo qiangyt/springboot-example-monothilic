@@ -3,19 +3,19 @@ package qiangyt.springboot_example.api.rnr;
 import java.util.UUID;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import lombok.Data;
 
 
 @Data
-public class CreateOrderReq {
+public class CreateProductReq {
 
-    @NotNull
-    private UUID customerAccountId;
-    
-    @NotNull 
-    private UUID productId;
+    @Size(max = 32)
+    @NotBlank
+    private String name;
     
     @Min(1)
     @NotNull 

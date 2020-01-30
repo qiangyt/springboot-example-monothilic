@@ -1,0 +1,4 @@
+- add coverage report to github pages: https://docs.travis-ci.com/user/deployment/pages/
+- push to dockerhub if master: https://docs.travis-ci.com/user/docker/
+- static pages. use github oauth
+- swagger annotation document

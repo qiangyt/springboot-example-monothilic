@@ -12,10 +12,10 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @EnableJpaRepositories(basePackages = "qiangyt.springboot_example.server.repository")
 @EnableJpaAuditing
 @EnableAsync
-public class OrderApplication {
+public class MonothilicApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(OrderApplication.class, args);
+    SpringApplication.run(MonothilicApplication.class, args);
   }
 
 

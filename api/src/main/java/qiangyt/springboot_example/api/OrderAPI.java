@@ -7,8 +7,8 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import qiangyt.springboot_example.api.rnr.CreateOrderReq;
-import qiangyt.springboot_example.api.vo.OrderDetailVO;
-import qiangyt.springboot_example.api.vo.OrderVO;
+import qiangyt.springboot_example.api.vo.OrderDetail;
+import qiangyt.springboot_example.api.vo.Order;
 import qiangyt.springboot_example.common.error.NotFoundException;
 
 
@@ -18,9 +18,9 @@ import qiangyt.springboot_example.common.error.NotFoundException;
  */
 public interface OrderAPI {
 
-    OrderVO getOrder(@NotNull UUID orderId);
+    Order getOrder(@NotNull UUID orderId);
 
-    default OrderVO loadOrder(@NotNull UUID orderId) {
+    default Order loadOrder(@NotNull UUID orderId) {
         var r = getOrder(orderId);
         if (r == null) {
             throw new NotFoundException("order(id=%s) not found", orderId);
@@ -28,14 +28,14 @@ public interface OrderAPI {
         return r;
     }
 
-    OrderDetailVO getOrderDetail(@NotNull UUID orderId);
+    OrderDetail getOrderDetail(@NotNull UUID orderId);
 
-    OrderVO createOrder(@Valid CreateOrderReq request);
+    Order createOrder(@Valid CreateOrderReq request);
     
-    List<OrderVO> findOrdersByCustomerAccountId(@NotNull UUID customerAccountId);
+    List<Order> findOrdersByCustomerAccountId(@NotNull UUID customerAccountId);
 
     void deleteOrder(@NotNull UUID orderId);
 
-    List<OrderVO> findAllOrders();
+    List<Order> findAllOrders();
 
 }

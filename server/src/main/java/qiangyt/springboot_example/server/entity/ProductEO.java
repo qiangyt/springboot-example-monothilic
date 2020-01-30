@@ -14,7 +14,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import qiangyt.springboot_example.common.bean.BeanCopyer;
-import qiangyt.springboot_example.api.vo.ProductVO;
+import qiangyt.springboot_example.api.vo.Product;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,8 +25,8 @@ import lombok.Setter;
 @EntityListeners(AuditingEntityListener.class)
 public class ProductEO {
     
-    public static final BeanCopyer<ProductEO, ProductVO> VO_COPYER
-        = new BeanCopyer<>(ProductEO.class, ProductVO.class, ProductVO::new, ProductVO[]::new);
+    public static final BeanCopyer<ProductEO, Product> VO_COPYER
+        = new BeanCopyer<>(ProductEO.class, Product.class, Product::new, Product[]::new);
 
     @Id
     private UUID id;

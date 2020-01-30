@@ -2,16 +2,16 @@ package qiangyt.springboot_example.api.vo;
 
 import java.util.UUID;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
-public class ProductVO {
-
+@Data
+public class Order {
+    
     private UUID id;
 
-    private String name;
+    private String customerName;
+
+    private String productName;
 
     private int amount;
 

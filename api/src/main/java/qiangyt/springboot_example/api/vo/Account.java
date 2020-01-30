@@ -2,12 +2,10 @@ package qiangyt.springboot_example.api.vo;
 
 import java.util.UUID;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
-public class AccountVO {
+@Data
+public class Account {
 
     private UUID id;
 

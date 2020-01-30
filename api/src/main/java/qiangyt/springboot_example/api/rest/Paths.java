@@ -9,11 +9,31 @@ public interface Paths {
         final String BASE = Paths.BASE + "/orders";
 
         final String getOrder               = "{orderId}";
-        final String getOrderDetail         = "{orderId}?detail=true";
-        final String createOrder            = "?customerAccountId={customerAccountId}&productId={productId}&amount={amount}";
-        final String findOrdersByCustomerAccountId = "?customerAccountId={customerAccountId}";
+        final String getOrderDetail         = "/detail/{orderId}";
+        final String createOrder            = "";
+        final String findOrdersByCustomerAccountId = "query/byCustomerAccountId";
         final String deleteOrder            = "{orderId}";
-        final String findAllOrders          = "";
+        final String findAllOrders          = "all";
+    }
+
+    public static interface Account {
+
+        final String BASE = Paths.BASE + "/accounts";
+
+        final String getAccount               = "{accountId}";
+        final String createAccount            = "";
+        final String deleteAccount            = "{accountId}";
+        final String findAllAccounts          = "all";
+    }
+
+    public static interface Product {
+
+        final String BASE = Paths.BASE + "/products";
+
+        final String getProduct               = "{productId}";
+        final String createProduct            = "";
+        final String deleteProduct            = "{productId}";
+        final String findAllProducts          = "all";
     }
     
 }

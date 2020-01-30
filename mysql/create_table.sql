@@ -10,12 +10,14 @@ CREATE TABLE account (
 
   `first_name`          VARCHAR(32)  NOT NULL,
   `second_name`         VARCHAR(32)  NOT NULL,
+  `password`            VARCHAR(32)  NOT NULL,
   `address`             VARCHAR(100),
 
   `updated_at`          DATETIME                             NOT NULL,
   `created_at`          DATETIME                             NOT NULL,
 
-  PRIMARY KEY (id)
+  PRIMARY KEY (id),
+  UNIQUE(first_name, second_name)
 );
 
 
@@ -32,7 +34,8 @@ CREATE TABLE product (
   `updated_at`  DATETIME                            NOT NULL,
   `created_at`  DATETIME                            NOT NULL,
 
-  PRIMARY KEY (id)
+  PRIMARY KEY (id),
+  UNIQUE(name)
 );
 
 
@@ -53,6 +56,6 @@ CREATE TABLE `order` (
   PRIMARY KEY (id)
 );
 
-CREATE INDEX idx_order_1  ON `order`(account_id);
+CREATE INDEX idx_order_1  ON `order`(customer_account_id);
 CREATE INDEX idx_order_2  ON `order`(product_id);
 

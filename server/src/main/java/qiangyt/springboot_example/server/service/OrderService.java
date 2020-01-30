@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 
 import qiangyt.springboot_example.api.OrderAPI;
 import qiangyt.springboot_example.api.rnr.CreateOrderReq;
-import qiangyt.springboot_example.api.vo.OrderDetailVO;
-import qiangyt.springboot_example.api.vo.OrderVO;
+import qiangyt.springboot_example.api.vo.OrderDetail;
+import qiangyt.springboot_example.api.vo.Order;
 import qiangyt.springboot_example.common.error.NotFoundException;
 import qiangyt.springboot_example.server.entity.OrderEO;
 import qiangyt.springboot_example.server.repository.OrderRepository;
@@ -40,29 +40,32 @@ public class OrderService implements OrderAPI {
     private OrderRepository orderRepository;
 
 
-    OrderDetailVO renderOrderDetailVO(OrderEO entity) {
+    OrderDetail renderOrderDetail(OrderEO entity) {
         return DETAIL_VO_COPYER.copy(entity);
     }
 
 
-    OrderVO renderOrderVO(OrderEO entity) {
+    Order renderOrder(OrderEO entity) {
         return VO_COPYER.copy(entity);
     }
 
 
-    List<OrderVO> renderOrderVOs(Iterable<OrderEO> entities) {
+    List<Order> renderOrders(Iterable<OrderEO> entities) {
         return VO_COPYER.copy(entities);
     }
 
 
-    public OrderVO getOrder(UUID orderId) {
+    @Override
+    public Order getOrder(UUID orderId) {
         var entity = getOrderRepository().findById(orderId);
-        return renderOrderVO(entity.get());
+        return renderOrder(entity.get());
     }
 
-    public OrderDetailVO getOrderDetail(UUID orderId) {
+
+    @Override
+    public OrderDetail getOrderDetail(UUID orderId) {
         var entity = getOrderRepository().findById(orderId);
-        return renderOrderDetailVO(entity.get());
+        return renderOrderDetail(entity.get());
     }
 
     public OrderEO loadOrderEO(UUID orderId) {
@@ -74,7 +77,8 @@ public class OrderService implements OrderAPI {
     }
 
 
-    public OrderVO createOrder(CreateOrderReq request) {
+    @Override
+    public Order createOrder(CreateOrderReq request) {
         var customerAccount = getAccountService().loadAccountEO(request.getCustomerAccountId());
         var product = getProductService().loadProductEO(request.getProductId());
 
@@ -84,24 +88,28 @@ public class OrderService implements OrderAPI {
         order.setProduct(product);
         order.setAmount(request.getAmount());
 
-        return renderOrderVO(getOrderRepository().save(order));
+        return renderOrder(getOrderRepository().save(order));
     }
 
     
-    public List<OrderVO> findOrdersByCustomerAccountId(UUID customerAccountId) {
+    @Override
+    public List<Order> findOrdersByCustomerAccountId(UUID customerAccountId) {
         var entities = getOrderRepository().findByCustomerAccountId(customerAccountId);
-        return renderOrderVOs(entities);
+        return renderOrders(entities);
     }
 
 
+    @Override
     public void deleteOrder(UUID orderId) {
         var entity = loadOrderEO(orderId);
         getOrderRepository().delete(entity);
     }
 
-    public List<OrderVO> findAllOrders() {
+
+    @Override
+    public List<Order> findAllOrders() {
         var entities = getOrderRepository().findAll();
-        return renderOrderVOs(entities);
+        return renderOrders(entities);
     }
 
 }
