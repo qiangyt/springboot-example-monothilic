@@ -1,4 +1,4 @@
-FROM docker.wxcount.com:4443/library/maven:3.6.1-jdk-11 AS build
+FROM maven:3.6.1-jdk-11 AS build
 LABEL maintainer="qiangyt@wxcount.com"
 
 COPY docker/settings.xml /root/.m2/settings.xml
