@@ -1,7 +1,7 @@
 FROM maven:3.6.1-jdk-11 AS build
 LABEL maintainer="qiangyt@wxcount.com"
 
-COPY docker/settings.xml /root/.m2/settings.xml
+# COPY docker/settings.xml /root/.m2/settings.xml
 
 WORKDIR /workspace
 
