@@ -1,0 +1,31 @@
+version: '2'
+
+services:
+
+  mysql:
+    build:
+      context: ./mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpwd
+      - MYSQL_DATABASE=order_db
+      - MYSQL_USER=order_user
+      - MYSQL_PASSWORD=order_password
+    volumes:
+      - ../../tmp/mysql:/var/lib/mysql
+    container_name: qiangyt-monothilic-springboot-example.mysql
+
+  server:
+    build:
+      context: ./
+    container_name: qiangyt-monothilic-springboot-example.app
+    depends_on:
+      - mysql
+    environment:
+      - WAIT_LIST=mysql:3306
+      - WAIT_TIMEOUT=120
+      - SPRING_PROFILES_ACTIVE=test
+    ports:
+      - 8080:8080
+      - 8081:8081
+    volumes:
+      - ./server/config:/opt/app/config:ro

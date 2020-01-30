@@ -1,0 +1,15 @@
+server:
+  port: 8080
+
+spring:
+
+  application:
+    name: order-service
+  
+  datasource:
+    url: jdbc:mysql://mysql:3306/order_db?useSSL=false
+    username: order_user
+    password: order_password
+
+  jpa:
+    open-in-view: false
