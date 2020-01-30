@@ -10,7 +10,7 @@ services:
 #before_install:
 
 script:
-  - docker build .
+  - docker build . -t qiangyt/monothilic-springboot-example:latest
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker push qiangyt/monothilic-springboot-example:latest
 
