@@ -21,7 +21,7 @@ COPY server/src    ./server/src
 RUN mvn -B -Dmaven.gitcommitid.skip=true clean install
 
 # ------------------------------------------------------------------------------
-FROM docker.wxcount.com:4443/library/openjdk:11.0.4-jdk
+FROM openjdk:11.0.4-jdk
 LABEL maintainer="qiangyt@wxcount.com"
 
 EXPOSE 8080 8081
