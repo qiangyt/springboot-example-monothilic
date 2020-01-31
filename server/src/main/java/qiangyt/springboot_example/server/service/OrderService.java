@@ -10,6 +10,7 @@ import qiangyt.springboot_example.api.OrderAPI;
 import qiangyt.springboot_example.api.rnr.CreateOrderReq;
 import qiangyt.springboot_example.api.vo.OrderDetail;
 import qiangyt.springboot_example.api.vo.Order;
+import qiangyt.springboot_example.common.error.BadRequestException;
 import qiangyt.springboot_example.common.error.NotFoundException;
 import qiangyt.springboot_example.server.entity.OrderEO;
 import qiangyt.springboot_example.server.repository.OrderRepository;
@@ -82,12 +83,20 @@ public class OrderService implements OrderAPI {
         var customerAccount = getAccountService().loadAccountEO(request.getCustomerAccountId());
         var product = getProductService().loadProductEO(request.getProductId());
 
+        int amount = request.getAmount();
+        int remainingAmount = product.getAmount() - amount;
+        if (remainingAmount <= 0) {
+            throw new BadRequestException("product %s is sold out", product.getName());
+        }
+
         var order = new OrderEO();
         order.setId(UUID.randomUUID());
         order.setCustomerAccount(customerAccount);
         order.setProduct(product);
-        order.setAmount(request.getAmount());
+        order.setAmount(amount);
 
+        getProductService().decreaseProductAmount(product, amount);
+        
         return renderOrder(getOrderRepository().save(order));
     }
 

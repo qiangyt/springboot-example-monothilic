@@ -1,4 +1,4 @@
-package qiangyt.springboot_example.server.misc;
+package qiangyt.springboot_example.server.config;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

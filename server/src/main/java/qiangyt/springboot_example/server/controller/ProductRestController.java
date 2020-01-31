@@ -18,7 +18,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import qiangyt.springboot_example.api.ProductAPI;
 import qiangyt.springboot_example.api.rest.Paths;
 import qiangyt.springboot_example.api.rnr.CreateProductReq;
-import qiangyt.springboot_example.server.misc.ExposedViaSpringfox;
+import qiangyt.springboot_example.server.config.ExposedViaSpringfox;
 import qiangyt.springboot_example.api.vo.Product;
 import lombok.Getter;
 

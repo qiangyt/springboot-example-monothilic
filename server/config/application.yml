@@ -1,7 +1,10 @@
+app:
+  product-sold-out-notify:
+    queue-name: monothilic-springboot-example-product-sold-out-notify
+
 logging:
   level:
-    org:
-      springframework: INFO
+    org.springframework: INFO
 
 management:
   endpoints:

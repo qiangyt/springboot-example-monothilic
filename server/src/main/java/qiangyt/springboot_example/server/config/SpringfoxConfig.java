@@ -1,4 +1,4 @@
-package qiangyt.springboot_example.server.misc;
+package qiangyt.springboot_example.server.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

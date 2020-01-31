@@ -20,7 +20,7 @@ import qiangyt.springboot_example.api.OrderAPI;
 import qiangyt.springboot_example.api.rest.Paths;
 import qiangyt.springboot_example.api.rnr.CreateOrderReq;
 import qiangyt.springboot_example.api.vo.OrderDetail;
-import qiangyt.springboot_example.server.misc.ExposedViaSpringfox;
+import qiangyt.springboot_example.server.config.ExposedViaSpringfox;
 import qiangyt.springboot_example.api.vo.Order;
 import lombok.Getter;
 
