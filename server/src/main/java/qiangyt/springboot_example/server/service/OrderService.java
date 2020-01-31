@@ -1,6 +1,5 @@
 package qiangyt.springboot_example.server.service;
 
-import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +50,7 @@ public class OrderService implements OrderAPI {
     }
 
 
-    List<Order> renderOrders(Iterable<OrderEO> entities) {
+    Order[] renderOrders(Iterable<OrderEO> entities) {
         return VO_COPYER.copy(entities);
     }
 
@@ -102,7 +101,7 @@ public class OrderService implements OrderAPI {
 
     
     @Override
-    public List<Order> findOrdersByCustomerAccountId(UUID customerAccountId) {
+    public Order[] findOrdersByCustomerAccountId(UUID customerAccountId) {
         var entities = getOrderRepository().findByCustomerAccountId(customerAccountId);
         return renderOrders(entities);
     }
@@ -116,7 +115,7 @@ public class OrderService implements OrderAPI {
 
 
     @Override
-    public List<Order> findAllOrders() {
+    public Order[] findAllOrders() {
         var entities = getOrderRepository().findAll();
         return renderOrders(entities);
     }

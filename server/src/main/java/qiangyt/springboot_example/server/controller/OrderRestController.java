@@ -1,6 +1,5 @@
 package qiangyt.springboot_example.server.controller;
 
-import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -47,9 +46,8 @@ public class OrderRestController {
 
 
     @GetMapping(path = Paths.Order.findOrdersByCustomerAccountId, consumes = "*")
-    public List<Order> findOrdersByCustomerAccountId(@RequestParam UUID customerAccountId) {
-        var r = getOrderAPI().findOrdersByCustomerAccountId(customerAccountId);
-        return r;
+    public Order[] findOrdersByCustomerAccountId(@RequestParam UUID customerAccountId) {
+        return getOrderAPI().findOrdersByCustomerAccountId(customerAccountId);
     }
 
     
@@ -72,7 +70,7 @@ public class OrderRestController {
     }
 
     @GetMapping(path = Paths.Order.findAllOrders, consumes = "*")
-    public List<Order> findAllOrders() {
+    public Order[] findAllOrders() {
         return getOrderAPI().findAllOrders();
     }
 

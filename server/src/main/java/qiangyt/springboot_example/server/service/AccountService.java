@@ -1,6 +1,5 @@
 package qiangyt.springboot_example.server.service;
 
-import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +37,7 @@ public class AccountService implements AccountAPI {
     }
 
 
-    List<Account> renderAccounts(Iterable<AccountEO> entities) {
+    Account[] renderAccounts(Iterable<AccountEO> entities) {
         return AccountEO.VO_COPYER.copy(entities);
     }
 
@@ -71,7 +70,7 @@ public class AccountService implements AccountAPI {
     }
 
     @Override
-    public List<Account> findAllAccounts() {
+    public Account[] findAllAccounts() {
         var entities = getAccountRepository().findAll();
         return renderAccounts(entities);
     }

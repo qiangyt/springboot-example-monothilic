@@ -1,6 +1,5 @@
 package qiangyt.springboot_example.server.service;
 
-import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +51,7 @@ public class ProductService implements ProductAPI {
     }
 
 
-    List<Product> renderProducts(Iterable<ProductEO> entities) {
+    Product[] renderProducts(Iterable<ProductEO> entities) {
         return ProductEO.VO_COPYER.copy(entities);
     }
 
@@ -84,7 +83,7 @@ public class ProductService implements ProductAPI {
     }
 
     @Override
-    public List<Product> findAllProducts() {
+    public Product[] findAllProducts() {
         var entities = getProductRepository().findAll();
         return renderProducts(entities);
     }

@@ -1,7 +1,6 @@
 package qiangyt.springboot_example.common.bean;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -51,7 +50,7 @@ public class BeanCopyer<SOURCE,TARGET> {
         return r;
     }
 
-    public List<TARGET> copy(Iterable<SOURCE> sources) {
+    public TARGET[] copy(Iterable<SOURCE> sources) {
         if (sources == null) {
             return null;
         }
@@ -61,7 +60,7 @@ public class BeanCopyer<SOURCE,TARGET> {
             r.add(copy(src));
         }
 
-        return r;
+        return r.toArray(getTargetArraySupplier().apply(r.size()));
     }
 
 }

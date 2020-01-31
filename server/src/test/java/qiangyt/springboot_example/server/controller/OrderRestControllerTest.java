@@ -76,9 +76,9 @@ public class OrderRestControllerTest {
 		order.setId(UUID.randomUUID());
 		order.setProductName("p");
 
-		var orderList = List.of(order);
+		var orders = new Order[]{order};
 
-		given(this.orderAPI.findOrdersByCustomerAccountId(customerAccountId)).willReturn(orderList);
+		given(this.orderAPI.findOrdersByCustomerAccountId(customerAccountId)).willReturn(orders);
 
 		mvc.perform(get("/api/orders/query/byCustomerAccountId?customerAccountId={customerAccountId}", customerAccountId))
             .andExpect(status().isOk())
@@ -160,15 +160,15 @@ public class OrderRestControllerTest {
 		order2.setId(UUID.randomUUID());
 		order2.setProductName("p2");
 
-		var listOfOrder = List.of(order1, order2);
+		var orders = new Order[]{order1, order2};
 
-		given(this.orderAPI.findAllOrders()).willReturn(listOfOrder);
+		given(this.orderAPI.findAllOrders()).willReturn(orders);
 
 		var reqBuilder = get("/api/orders/all");
 						
 		mvc.perform(reqBuilder)
 			.andExpect(status().isOk())
-			.andExpect(content().json(JsonHelper.to(listOfOrder)));
+			.andExpect(content().json(JsonHelper.to(orders)));
 	}
 
 }

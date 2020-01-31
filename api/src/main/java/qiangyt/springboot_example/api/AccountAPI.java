@@ -1,6 +1,5 @@
 package qiangyt.springboot_example.api;
 
-import java.util.List;
 import java.util.UUID;
 
 import javax.validation.Valid;
@@ -31,6 +30,6 @@ public interface AccountAPI {
 
     void deleteAccount(@NotNull UUID accountId);
 
-    List<Account> findAllAccounts();
+    Account[] findAllAccounts();
 
 }

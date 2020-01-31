@@ -1,6 +1,5 @@
 package qiangyt.springboot_example.server.controller;
 
-import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -58,7 +57,7 @@ public class AccountRestController {
 
 
     @GetMapping(path = Paths.Account.findAllAccounts, consumes = "*")
-    public List<Account> findAllAccounts() {
+    public Account[] findAllAccounts() {
         return getAccountAPI().findAllAccounts();
     }
 

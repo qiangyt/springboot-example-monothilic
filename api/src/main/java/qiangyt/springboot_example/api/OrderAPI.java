@@ -1,6 +1,5 @@
 package qiangyt.springboot_example.api;
 
-import java.util.List;
 import java.util.UUID;
 
 import javax.validation.Valid;
@@ -32,10 +31,10 @@ public interface OrderAPI {
 
     Order createOrder(@Valid CreateOrderReq request);
     
-    List<Order> findOrdersByCustomerAccountId(@NotNull UUID customerAccountId);
+    Order[] findOrdersByCustomerAccountId(@NotNull UUID customerAccountId);
 
     void deleteOrder(@NotNull UUID orderId);
 
-    List<Order> findAllOrders();
+    Order[] findAllOrders();
 
 }
