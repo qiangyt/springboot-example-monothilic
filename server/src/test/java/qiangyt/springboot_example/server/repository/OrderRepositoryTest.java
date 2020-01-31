@@ -36,6 +36,7 @@ public class OrderRepositoryTest {
             account1.setAddress("a1");
             account1.setFirstName("f1");
             account1.setSecondName("s1"); 
+            account1.setPassword("pwd1");
             account1 = this.entityManager.persist(account1);
         }
 
@@ -44,6 +45,7 @@ public class OrderRepositoryTest {
             account2.setAddress("a2");
             account2.setFirstName("f2");
             account2.setSecondName("s2");  
+            account2.setPassword("pwd2"); 
             account2 = this.entityManager.persist(account2);
         }
 
@@ -72,7 +74,8 @@ public class OrderRepositoryTest {
             account.setId(UUID.randomUUID());
             account.setAddress("a");
             account.setFirstName("f");
-            account.setSecondName("s");
+            account.setSecondName("s"); 
+            account.setPassword("pwd");
             account = this.entityManager.persist(account);
         }
 

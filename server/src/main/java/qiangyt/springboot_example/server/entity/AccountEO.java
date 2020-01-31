@@ -40,7 +40,7 @@ public class AccountEO {
     @Column(name = "address", length = 100)
     private String address;
 
-    @Column(name = "password", length = 32)
+    @Column(name = "password", length = 32, nullable = false)
     private String password;
 
     @Column(name = "created_at", updatable = false, nullable = false)
