@@ -1,4 +1,16 @@
 ###
+GET http://localhost:8080/api/accounts/all
 
-GET http://localhost:8080/api/orders
+###
+GET http://localhost:8080/api/products/all
+
+###
+POST http://localhost:8080/api/orders
 Content-Type: application/json; charset=utf-8
+
+{
+    "customerAccountId": "a507f8c5-2974-4a46-b7f5-82040a8eab9f",
+    "productId": "04a84023-7f42-4825-90f4-77408d5d0fdd",
+    "amount": 88
+}
+

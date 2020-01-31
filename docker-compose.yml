@@ -14,15 +14,26 @@ services:
       - ./tmp/mysql:/var/lib/mysql
     container_name: qiangyt-monothilic-springboot-example.mysql
 
+  rabbitmq:
+    image: rabbitmq:3.8.0-management
+    container_name: qiangyt-monothilic-springboot-example.rabbitmq
+    ports:
+      - 15672:15672
+    volumes:
+      - ./tmp/rabbitmq:/var/lib/rabbitmq
+    networks:
+      default:
+
   server:
     build:
       context: ./
-    container_name: qiangyt-monothilic-springboot-example.app
+    container_name: qiangyt-monothilic-springboot-example.server
     depends_on:
       - mysql
+      - rabbitmq
     environment:
       - WAIT_LIST=mysql:3306
-      - WAIT_TIMEOUT=120
+      - WAIT_TIMEOUT=60
       - SPRING_PROFILES_ACTIVE=test
     ports:
       - 8080:8080

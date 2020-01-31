@@ -41,6 +41,10 @@ spring:
   jpa:
     open-in-view: false
 
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+
 springfox:
   documentation:
     auto-startup: true
