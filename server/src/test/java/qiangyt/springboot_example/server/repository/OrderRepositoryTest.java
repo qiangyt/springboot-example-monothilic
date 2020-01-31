@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import qiangyt.springboot_example.api.enums.AccountRole;
 import qiangyt.springboot_example.server.entity.AccountEO;
 import qiangyt.springboot_example.server.entity.OrderEO;
 import qiangyt.springboot_example.server.entity.ProductEO;
@@ -34,18 +35,22 @@ public class OrderRepositoryTest {
         var account1 = new AccountEO(); {
             account1.setId(UUID.randomUUID());
             account1.setAddress("a1");
+            account1.setName("n1");
             account1.setFirstName("f1");
             account1.setSecondName("s1"); 
             account1.setPassword("pwd1");
+            account1.setRoles(AccountRole.admin.name());
             account1 = this.entityManager.persist(account1);
         }
 
         var account2 = new AccountEO(); {
             account2.setId(UUID.randomUUID());
+            account2.setName("n2");
             account2.setAddress("a2");
             account2.setFirstName("f2");
             account2.setSecondName("s2");  
             account2.setPassword("pwd2"); 
+            account2.setRoles(AccountRole.admin.name());
             account2 = this.entityManager.persist(account2);
         }
 
@@ -72,10 +77,12 @@ public class OrderRepositoryTest {
 	public void findByCustomerAccountId_accountId_not_matches() {
         var account = new AccountEO(); {
             account.setId(UUID.randomUUID());
+            account.setName("n");
             account.setAddress("a");
             account.setFirstName("f");
             account.setSecondName("s"); 
             account.setPassword("pwd");
+            account.setRoles(AccountRole.admin.name());
             account = this.entityManager.persist(account);
         }
 

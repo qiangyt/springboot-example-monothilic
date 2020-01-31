@@ -1,6 +1,9 @@
 app:
   product-sold-out-notify:
     queue-name: monothilic-springboot-example-product-sold-out-notify
+  api:
+    rest:
+      base-url: http://localhost:8080
 
 logging:
   level:
@@ -30,6 +33,10 @@ spring:
   application:
     name: monothilic-springboot-example
   
+  cache:
+    type: jcache
+    config: classpath:ehcache.xml
+
   datasource:
     url: jdbc:mysql://mysql:3306/order_db?useSSL=false
     username: order_user

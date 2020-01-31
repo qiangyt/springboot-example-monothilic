@@ -6,11 +6,12 @@ LABEL maintainer="qiangyt@wxcount.com"
 WORKDIR /workspace
 
 # force to install all plugins and dependencies for pom POM
-COPY pom.xml         ./pom.xml
-COPY common/pom.xml  ./common/pom.xml
-COPY api/pom.xml     ./api/pom.xml
-COPY server/pom.xml  ./server/pom.xml
-COPY jacoco/pom.xml     ./jacoco/pom.xml
+COPY pom.xml                    ./pom.xml
+COPY common/pom.xml             ./common/pom.xml
+COPY api/pom.xml                ./api/pom.xml
+COPY server/pom.xml             ./server/pom.xml
+COPY jacoco/pom.xml             ./jacoco/pom.xml
+COPY integration-test/pom.xml   ./integration-test/pom.xml
 
 RUN mvn clean dependency:go-offline test
 

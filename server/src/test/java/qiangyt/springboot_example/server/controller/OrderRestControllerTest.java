@@ -6,7 +6,9 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -29,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.List;
 import java.util.UUID;
 
-@ContextConfiguration(classes=OrderRestController.class)
+@ContextConfiguration(classes={OrderRestController.class, SecurityTestConfiguration.class})
 @RunWith(SpringRunner.class)
 @WebMvcTest(OrderRestController.class)
 public class OrderRestControllerTest {
@@ -41,6 +43,7 @@ public class OrderRestControllerTest {
 	OrderAPI orderAPI;
 
 	@Test
+	@WithMockUser(roles="customer")
 	public void createOrder() throws Exception {
 
 		var createOrder = new CreateOrderReq();

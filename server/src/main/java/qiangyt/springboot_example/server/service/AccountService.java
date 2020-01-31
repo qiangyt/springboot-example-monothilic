@@ -37,6 +37,18 @@ public class AccountService implements AccountAPI {
     }
 
 
+    @Override
+    public Account findAccountByName(String name) {
+        var entity = findAccountEntityByName(name);
+        return renderAccount(entity);
+    }
+
+
+    public AccountEO findAccountEntityByName(String name) {
+        return getAccountRepository().findByName(name);
+    }
+
+
     Account[] renderAccounts(Iterable<AccountEO> entities) {
         return AccountEO.VO_COPYER.copy(entities);
     }

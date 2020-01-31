@@ -16,6 +16,8 @@ import qiangyt.springboot_example.common.error.NotFoundException;
  */
 public interface AccountAPI {
 
+    Account findAccountByName(String name);
+
     Account getAccount(@NotNull UUID accountId);
 
     default Account loadAccount(@NotNull UUID accountId) {

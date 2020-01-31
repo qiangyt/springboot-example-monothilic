@@ -30,6 +30,11 @@ public class AccountAPIRestClient implements AccountAPI {
     }
 
     @Override
+    public Account findAccountByName(String name) {
+        return getClient().GET(Paths.Account.findAccountByName + "?name={name}", Account.class, name);
+    }
+
+    @Override
     public Account createAccount(CreateAccountReq request) {
         return getClient().POST(Paths.Account.createAccount, request, Account.class);
     }

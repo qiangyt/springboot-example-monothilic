@@ -15,5 +15,6 @@ import qiangyt.springboot_example.server.entity.AccountEO;
 @Repository
 public interface AccountRepository extends PagingAndSortingRepository<AccountEO, UUID>{
 
+    AccountEO findByName(String name);
 
 }

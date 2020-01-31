@@ -36,6 +36,7 @@ public class AccountRestController {
     private AccountAPI accountAPI;
 
 
+    //@PreAuthorize("hasAuthority('ROLE_USER')")
     @PostMapping(path = Paths.Account.createAccount, consumes = APPLICATION_JSON_UTF8_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public Account createAccount(@RequestBody CreateAccountReq request) {
@@ -43,19 +44,22 @@ public class AccountRestController {
     }
 
     
+    //@IsAdmin
     @DeleteMapping(path = Paths.Account.deleteAccount, consumes = "*")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAccount(@PathVariable UUID accountId) {
         getAccountAPI().deleteAccount(accountId);
     }
 
-    
+
+    //@IsAdmin
     @GetMapping(path = Paths.Account.getAccount, consumes = "*")
     public Account getAccount(@PathVariable UUID accountId) {
         return getAccountAPI().getAccount(accountId);
     }
 
-
+    
+    //@IsAdmin
     @GetMapping(path = Paths.Account.findAllAccounts, consumes = "*")
     public Account[] findAllAccounts() {
         return getAccountAPI().findAllAccounts();

@@ -31,6 +31,9 @@ public class AccountEO {
     @Id
     private UUID id;
 
+    @Column(name = "name", nullable = false, length = 32)
+    private String name;
+
     @Column(name = "first_name", nullable = false, length = 32)
     private String firstName;
 
@@ -42,6 +45,9 @@ public class AccountEO {
 
     @Column(name = "password", length = 32, nullable = false)
     private String password;
+
+    @Column(name = "roles", nullable = false, length = 64)
+    private String roles;
 
     @Column(name = "created_at", updatable = false, nullable = false)
     @CreatedDate

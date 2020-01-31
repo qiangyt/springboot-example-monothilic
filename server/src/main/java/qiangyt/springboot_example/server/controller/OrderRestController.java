@@ -20,6 +20,7 @@ import qiangyt.springboot_example.api.rest.Paths;
 import qiangyt.springboot_example.api.rnr.CreateOrderReq;
 import qiangyt.springboot_example.api.vo.OrderDetail;
 import qiangyt.springboot_example.server.config.ExposedViaSpringfox;
+import qiangyt.springboot_example.server.security.IsCustomer;
 import qiangyt.springboot_example.api.vo.Order;
 import lombok.Getter;
 
@@ -38,6 +39,7 @@ public class OrderRestController {
     private OrderAPI orderAPI;
 
 
+    @IsCustomer
     @PostMapping(path = Paths.Order.createOrder, consumes = APPLICATION_JSON_UTF8_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public Order createOrder(@RequestBody CreateOrderReq request) {
@@ -45,12 +47,14 @@ public class OrderRestController {
     }
 
 
+    //@IsUser
     @GetMapping(path = Paths.Order.findOrdersByCustomerAccountId, consumes = "*")
     public Order[] findOrdersByCustomerAccountId(@RequestParam UUID customerAccountId) {
         return getOrderAPI().findOrdersByCustomerAccountId(customerAccountId);
     }
 
     
+    //@IsAdmin
     @DeleteMapping(path = Paths.Order.deleteOrder, consumes = "*")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteOrder(@PathVariable UUID orderId) {
@@ -58,17 +62,20 @@ public class OrderRestController {
     }
 
     
+    //@IsUser
     @GetMapping(path = Paths.Order.getOrder, consumes = "*")
     public Order getOrder(@PathVariable UUID orderId) {
         return getOrderAPI().getOrder(orderId);
     }
 
     
+    //@IsUser
     @GetMapping(path = Paths.Order.getOrderDetail, consumes = "*")
     public OrderDetail getOrderDetail(@PathVariable UUID orderId) {
         return getOrderAPI().getOrderDetail(orderId);
     }
 
+    //@IsAdmin
     @GetMapping(path = Paths.Order.findAllOrders, consumes = "*")
     public Order[] findAllOrders() {
         return getOrderAPI().findAllOrders();

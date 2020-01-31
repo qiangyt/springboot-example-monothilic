@@ -21,6 +21,7 @@ public interface Paths {
         final String BASE = Paths.BASE + "/accounts";
 
         final String getAccount               = "{accountId}";
+        final String findAccountByName        = "query/byName";
         final String createAccount            = "";
         final String deleteAccount            = "{accountId}";
         final String findAllAccounts          = "all";

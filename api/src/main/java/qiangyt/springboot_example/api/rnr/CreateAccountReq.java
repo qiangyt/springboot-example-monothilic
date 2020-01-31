@@ -11,6 +11,10 @@ public class CreateAccountReq {
 
     @Size(max = 32)
     @NotBlank
+    private String name;
+
+    @Size(max = 32)
+    @NotBlank
     private String firstName;
     
     @Size(max = 32)

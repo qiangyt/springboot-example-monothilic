@@ -8,15 +8,18 @@ USE order_db;
 CREATE TABLE account (
   `id`                  VARCHAR(36) CHARACTER SET latin1     NOT NULL,
 
+  `name`                VARCHAR(32)  NOT NULL,
   `first_name`          VARCHAR(32)  NOT NULL,
   `second_name`         VARCHAR(32)  NOT NULL,
   `password`            VARCHAR(32)  NOT NULL,
   `address`             VARCHAR(100),
+  `roles`               VARCHAR(64)  NOT NULL,
 
   `updated_at`          DATETIME                             NOT NULL,
   `created_at`          DATETIME                             NOT NULL,
 
   PRIMARY KEY (id),
+  UNIQUE(name),
   UNIQUE(first_name, second_name)
 );
 
