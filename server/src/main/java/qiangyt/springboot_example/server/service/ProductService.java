@@ -16,6 +16,7 @@ import qiangyt.springboot_example.server.queue.ProductSoldOutMessage;
 import qiangyt.springboot_example.server.queue.QueueService;
 import qiangyt.springboot_example.server.repository.ProductRepository;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -24,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @Getter
+@Setter
 @Slf4j
 @Component
 public class ProductService implements ProductAPI {
@@ -35,8 +37,8 @@ public class ProductService implements ProductAPI {
     @Autowired
     private QueueService queueService;
 
-    @Value("${app.out-of-product-notify.threshold}")
-    private int outOfProductNotifyThreshold = 10;
+    @Value("${app.out-of-product-notify.threshold: 10}")
+    private int outOfProductNotifyThreshold;
 
     Product renderProduct(ProductEO entity) {
         return ProductEO.VO_COPYER.copy(entity);
@@ -88,7 +90,7 @@ public class ProductService implements ProductAPI {
     }
 
 
-    void decreaseProductAmount(ProductEO product, int amount) {
+    public void decreaseProductAmount(ProductEO product, int amount) {
         int remainingAmount = product.getAmount() - amount;
 
         product.setAmount(remainingAmount);

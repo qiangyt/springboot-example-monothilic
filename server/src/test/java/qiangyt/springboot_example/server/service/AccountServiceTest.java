@@ -55,4 +55,16 @@ public class AccountServiceTest {
         this.target.loadAccountEO(id);
     }
 
+    @Test
+    public void getAccount_happy() {
+        var id = UUID.randomUUID();
+
+        var expected = new AccountEO();
+        expected.setId(UUID.randomUUID());
+        when(this.accountRepository.findById(id)).thenReturn(Optional.of(expected));
+
+        var actual = this.target.getAccount(id);
+        Assert.assertSame(expected.getId(), actual.getId());
+    }
+
 }
