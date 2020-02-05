@@ -6,6 +6,7 @@ package qiangyt.springboot_example.common.misc;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 import com.google.common.collect.Lists;
 
@@ -33,7 +34,7 @@ public class StringHelper {
    * @req texts
    * @return
    */
-  public static String join(String separator, Collection<String> texts) {
+  public static <T> String join(String separator, Collection<T> texts) {
     return join(separator, texts.toArray(new String[texts.size()]));
   }
 
@@ -43,16 +44,16 @@ public class StringHelper {
    * @req texts
    * @return
    */
-  public static String join(String separator, String... texts) {
-    var r = new StringBuilder(texts.length * 64);
+  public static <T> String join(String separator, T... objects) {
+    var r = new StringBuilder(objects.length * 64);
     var isFirst = true;
-    for (var text : texts) {
+    for (var obj : objects) {
       if (isFirst) {
         isFirst = false;
       } else {
         r.append(separator);
       }
-      r.append(text);
+      r.append(Objects.toString(obj));
     }
     return r.toString();
   }

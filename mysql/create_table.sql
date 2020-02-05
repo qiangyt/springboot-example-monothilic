@@ -11,7 +11,7 @@ CREATE TABLE account (
   `name`                VARCHAR(32)  NOT NULL,
   `first_name`          VARCHAR(32)  NOT NULL,
   `second_name`         VARCHAR(32)  NOT NULL,
-  `password`            VARCHAR(32)  NOT NULL,
+  `password`            VARCHAR(128)  NOT NULL,
   `address`             VARCHAR(100),
   `roles`               VARCHAR(64)  NOT NULL,
 

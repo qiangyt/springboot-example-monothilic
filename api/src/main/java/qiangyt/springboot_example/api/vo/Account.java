@@ -3,6 +3,7 @@ package qiangyt.springboot_example.api.vo;
 import java.util.UUID;
 
 import lombok.Data;
+import qiangyt.springboot_example.api.enums.AccountRole;
 
 @Data
 public class Account {
@@ -17,6 +18,6 @@ public class Account {
 
     private String address;
 
-    private String roles; // comma separated role names
+    private AccountRole[] roles;
 
 }

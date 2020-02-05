@@ -16,6 +16,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import lombok.Getter;
 import lombok.Setter;
 import qiangyt.springboot_example.api.vo.Account;
+import qiangyt.springboot_example.api.enums.AccountRole;
+import qiangyt.springboot_example.api.rnr.CreateAccountReq;
 import qiangyt.springboot_example.common.bean.BeanCopyer;
 
 @Getter
@@ -25,8 +27,29 @@ import qiangyt.springboot_example.common.bean.BeanCopyer;
 @EntityListeners(AuditingEntityListener.class)
 public class AccountEO {
 
-    public static final BeanCopyer<AccountEO, Account> VO_COPYER 
-        = new BeanCopyer<>(AccountEO.class, Account.class, Account::new, Account[]::new);
+    public static final BeanCopyer<AccountEO, Account> VO_COPYER
+        = new BeanCopyer<>(AccountEO.class, Account.class, Account::new, Account[]::new) {
+            @Override public Account copy(AccountEO source) {
+                if (source == null) {
+                    return null;
+                }
+                var r = super.copy(source);
+                r.setRoles(AccountRole.parse(source.getRoles()));
+                return r;
+            }
+        };
+
+    public static final BeanCopyer<CreateAccountReq, AccountEO> REQ_COPYER
+    = new BeanCopyer<>(CreateAccountReq.class, AccountEO.class, AccountEO::new, AccountEO[]::new) {
+        @Override public AccountEO copy(CreateAccountReq source) {
+            if (source == null) {
+                return null;
+            }
+            var r = super.copy(source);
+            r.setRoles(AccountRole.format(source.getRoles()));
+            return r;
+        }
+    };
 
     @Id
     private UUID id;
@@ -43,7 +66,7 @@ public class AccountEO {
     @Column(name = "address", length = 100)
     private String address;
 
-    @Column(name = "password", length = 32, nullable = false)
+    @Column(name = "password", length = 128, nullable = false)
     private String password;
 
     @Column(name = "roles", nullable = false, length = 64)
@@ -56,5 +79,5 @@ public class AccountEO {
     @Column(name = "updatedAt", nullable = false)
     @LastModifiedDate
     private Date updatedAt;
-    
+
 }

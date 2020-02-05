@@ -10,6 +10,8 @@ services:
       - MYSQL_DATABASE=order_db
       - MYSQL_USER=order_user
       - MYSQL_PASSWORD=order_password
+    ports:
+      - 3306:3306
     volumes:
       - ./tmp/mysql:/var/lib/mysql
     container_name: qiangyt-monothilic-springboot-example.mysql
@@ -19,6 +21,7 @@ services:
     container_name: qiangyt-monothilic-springboot-example.rabbitmq
     ports:
       - 15672:15672
+      - 5672:5672
     volumes:
       - ./tmp/rabbitmq:/var/lib/rabbitmq
     networks:

@@ -32,7 +32,7 @@ import lombok.Getter;
 @Getter
 @ExposedViaSpringfox
 @RestController
-@RequestMapping(path = Paths.Order.BASE, produces = APPLICATION_JSON_UTF8_VALUE)
+@RequestMapping(path = Paths.Order.BASE, produces = APPLICATION_JSON_UTF8_VALUE, consumes = "*")
 public class OrderRestController {
 
     @Autowired
@@ -48,35 +48,35 @@ public class OrderRestController {
 
 
     //@IsUser
-    @GetMapping(path = Paths.Order.findOrdersByCustomerAccountId, consumes = "*")
+    @GetMapping(path = Paths.Order.findOrdersByCustomerAccountId)
     public Order[] findOrdersByCustomerAccountId(@RequestParam UUID customerAccountId) {
         return getOrderAPI().findOrdersByCustomerAccountId(customerAccountId);
     }
 
-    
+
     //@IsAdmin
-    @DeleteMapping(path = Paths.Order.deleteOrder, consumes = "*")
+    @DeleteMapping(path = Paths.Order.deleteOrder)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteOrder(@PathVariable UUID orderId) {
         getOrderAPI().deleteOrder(orderId);
     }
 
-    
+
     //@IsUser
-    @GetMapping(path = Paths.Order.getOrder, consumes = "*")
+    @GetMapping(path = Paths.Order.getOrder)
     public Order getOrder(@PathVariable UUID orderId) {
         return getOrderAPI().getOrder(orderId);
     }
 
-    
+
     //@IsUser
-    @GetMapping(path = Paths.Order.getOrderDetail, consumes = "*")
+    @GetMapping(path = Paths.Order.getOrderDetail)
     public OrderDetail getOrderDetail(@PathVariable UUID orderId) {
         return getOrderAPI().getOrderDetail(orderId);
     }
 
     //@IsAdmin
-    @GetMapping(path = Paths.Order.findAllOrders, consumes = "*")
+    @GetMapping(path = Paths.Order.findAllOrders)
     public Order[] findAllOrders() {
         return getOrderAPI().findAllOrders();
     }

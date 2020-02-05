@@ -29,7 +29,7 @@ import lombok.Getter;
 @Getter
 @ExposedViaSpringfox
 @RestController
-@RequestMapping(path = Paths.Product.BASE, produces = APPLICATION_JSON_UTF8_VALUE)
+@RequestMapping(path = Paths.Product.BASE, produces = APPLICATION_JSON_UTF8_VALUE, consumes = "*")
 public class ProductRestController {
 
     @Autowired
@@ -42,21 +42,21 @@ public class ProductRestController {
         return getProductAPI().createProduct(request);
     }
 
-    
-    @DeleteMapping(path = Paths.Product.deleteProduct, consumes = "*")
+
+    @DeleteMapping(path = Paths.Product.deleteProduct)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteProduct(@PathVariable UUID productId) {
         getProductAPI().deleteProduct(productId);
     }
 
-    
-    @GetMapping(path = Paths.Product.getProduct, consumes = "*")
+
+    @GetMapping(path = Paths.Product.getProduct)
     public Product getProduct(@PathVariable UUID productId) {
         return getProductAPI().getProduct(productId);
     }
 
 
-    @GetMapping(path = Paths.Product.findAllProducts, consumes = "*")
+    @GetMapping(path = Paths.Product.findAllProducts)
     public Product[] findAllProducts() {
         return getProductAPI().findAllProducts();
     }

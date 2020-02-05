@@ -11,22 +11,24 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import qiangyt.springboot_example.common.misc.StringHelper;
 
 public enum AccountRole {
-    customer, 
+    customer,
     admin;
 
     public final Collection<GrantedAuthority> grantedAuthorities
         = Collections.unmodifiableCollection(AuthorityUtils.createAuthorityList(name()));
-    
-        
-    public static Collection<GrantedAuthority> parseAsGrantedAuthorities(String roles) {
+
+
+    public static Collection<GrantedAuthority> toGrantedAuthorities(AccountRole[] roles) {
         var roleNames = new HashSet<String>();
-        for (var role: parse(roles)) {
+        for (var role: roles) {
             roleNames.add(role.name());
         }
-
         return AuthorityUtils.createAuthorityList(roleNames.toArray(new String[roleNames.size()]));
     }
 
+    public static String format(AccountRole[] roles) {
+        return StringHelper.join(", ", roles);
+    }
 
     public static AccountRole[] parse(String roles) {
         if (StringHelper.isBlank(roles)) {
@@ -47,7 +49,7 @@ public enum AccountRole {
             if (role == null) {
                 continue; //TODO: warning
             }
-            
+
             r.add(role);
         }
 

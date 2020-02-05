@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import qiangyt.springboot_example.api.AccountAPI;
 import qiangyt.springboot_example.api.OrderAPI;
 import qiangyt.springboot_example.api.ProductAPI;
+import qiangyt.springboot_example.api.enums.AccountRole;
 import qiangyt.springboot_example.api.rnr.CreateAccountReq;
 import qiangyt.springboot_example.api.rnr.CreateOrderReq;
 import qiangyt.springboot_example.api.rnr.CreateProductReq;
@@ -37,7 +38,7 @@ public class Provisioner {
 
     @Autowired
     private ProductAPI productAPI;
-    
+
     @Autowired
     private ProductRepository productRepository;
 
@@ -50,17 +51,16 @@ public class Provisioner {
 
     @PostConstruct
     public void init() {
-        Account c1;
-        if (getAccountRepository().count() == 0) {
+        Account c1 = getAccountAPI().findAccountByName("admin");
+        if (c1 == null) {
             var req = new CreateAccountReq();
             req.setAddress("ca");
+            req.setName("admin");
             req.setFirstName("fn");
             req.setSecondName("sn");
             req.setPassword("pwd");
+            req.setRoles(new AccountRole[]{AccountRole.admin});
             c1 = getAccountAPI().createAccount(req);
-        } else {
-            var accountId = getAccountRepository().findAll().iterator().next().getId();
-            c1 = getAccountAPI().loadAccount(accountId);
         }
 
         Product p1;

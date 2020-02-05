@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import lombok.Getter;
 import qiangyt.springboot_example.api.AccountAPI;
 import qiangyt.springboot_example.api.rnr.CreateAccountReq;
+import qiangyt.springboot_example.api.rnr.SignInResp;
 import qiangyt.springboot_example.api.vo.Account;
 import qiangyt.springboot_example.common.rest.SyncRestClient;
 
@@ -18,9 +19,9 @@ import qiangyt.springboot_example.common.rest.SyncRestClient;
 public class AccountAPIRestClient implements AccountAPI {
 
     private final SyncRestClient client;
-        
+
     public AccountAPIRestClient(@Autowired RestTemplateBuilder restTemplateBuilder,
-                                @Value("${app.api.rest.base-url:http://localhost:8080}") String baseUrl ) {
+            @Value("${app.api.rest.base-url:http://localhost:8080}") String baseUrl) {
         this.client = new SyncRestClient(restTemplateBuilder, baseUrl + Paths.Account.BASE, false);
     }
 
@@ -31,7 +32,7 @@ public class AccountAPIRestClient implements AccountAPI {
 
     @Override
     public Account findAccountByName(String name) {
-        return getClient().GET(Paths.Account.findAccountByName + "?name={name}", Account.class, name);
+        return getClient().GET(Paths.Account.findAccountByName, Account.class, name);
     }
 
     @Override
@@ -47,6 +48,11 @@ public class AccountAPIRestClient implements AccountAPI {
     @Override
     public Account[] findAllAccounts() {
         return getClient().GET(Paths.Account.findAllAccounts, Account[].class);
+    }
+
+    @Override
+    public SignInResp signInByName(String name, String password) {
+        return getClient().POST(Paths.Account.signInByName, password, SignInResp.class, name);
     }
 
 

@@ -1,11 +1,18 @@
 ###
-GET http://localhost:8080/api/accounts/all
+GET http://localhost:8180/api/accounts/all
 
 ###
-GET http://localhost:8080/api/products/all
+POST http://localhost:8180/api/accounts/signin/byName/admin
+Content-Type: application/json; charset=utf-8
+
+pwd
+
 
 ###
-POST http://localhost:8080/api/orders
+GET http://localhost:8180/api/products/all
+
+###
+POST http://localhost:8180/api/orders
 Content-Type: application/json; charset=utf-8
 
 {

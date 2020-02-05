@@ -33,20 +33,20 @@ import qiangyt.springboot_example.common.misc.Delegation;
 /**
  *
  * Based on org.springframework.security.config.authentication.CachingUserDetailsService
- * 
+ *
  */
 @Getter
 @Setter
 @Component
-public class CachingUserDetailsService 
+public class CachingUserDetailsService
 extends Delegation<UserDetailsService>
 implements UserDetailsService {
 
     @Autowired
 	private CacheManager cacheManager;
-	
+
 	private UserCache userCache;
-	
+
 	public CachingUserDetailsService(@Autowired UserDetailsServiceImpl target) {
 		super(target);
 

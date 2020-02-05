@@ -3,6 +3,7 @@ package qiangyt.springboot_example.server.repository;
 import java.util.UUID;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Repository;
 
 import qiangyt.springboot_example.server.entity.AccountEO;
@@ -15,6 +16,7 @@ import qiangyt.springboot_example.server.entity.AccountEO;
 @Repository
 public interface AccountRepository extends PagingAndSortingRepository<AccountEO, UUID>{
 
+    @Nullable
     AccountEO findByName(String name);
 
 }

@@ -6,6 +6,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import qiangyt.springboot_example.api.rnr.CreateAccountReq;
+import qiangyt.springboot_example.api.rnr.SignInResp;
 import qiangyt.springboot_example.api.vo.Account;
 import qiangyt.springboot_example.common.error.NotFoundException;
 
@@ -15,6 +16,8 @@ import qiangyt.springboot_example.common.error.NotFoundException;
  *
  */
 public interface AccountAPI {
+
+    SignInResp signInByName(String name, String password);
 
     Account findAccountByName(String name);
 

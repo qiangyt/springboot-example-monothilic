@@ -19,9 +19,10 @@ public interface Paths {
     public static interface Account {
 
         final String BASE = Paths.BASE + "/accounts";
+        final String signInByName = "signin/byName/{name}";
 
         final String getAccount               = "{accountId}";
-        final String findAccountByName        = "query/byName";
+        final String findAccountByName        = "query/byName/{name}";
         final String createAccount            = "";
         final String deleteAccount            = "{accountId}";
         final String findAllAccounts          = "all";
@@ -36,5 +37,5 @@ public interface Paths {
         final String deleteProduct            = "{productId}";
         final String findAllProducts          = "all";
     }
-    
+
 }

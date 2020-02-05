@@ -22,20 +22,20 @@ management:
       enabled: true
       show-details: always
   server:
-    port: 8081
+    port: 8181
     address: 0.0.0.0
 
 server:
-  port: 8080
+  port: 8180
 
 spring:
 
   application:
     name: monothilic-springboot-example
-  
+
   cache:
-    type: jcache
-    config: classpath:ehcache.xml
+    jcache:
+      config: classpath:ehcache.xml
 
   datasource:
     url: jdbc:mysql://mysql:3306/order_db?useSSL=false
