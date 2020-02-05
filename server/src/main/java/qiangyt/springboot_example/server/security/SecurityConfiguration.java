@@ -36,6 +36,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests().anyRequest().permitAll() // permit all and we will use annotation to do authorization
                 .and()
                 //.addFilter(new JwtAuthenticationFilter(authMgr))
+                .addFilterBefore(new CORSFilter(), JwtAuthorizationFilter.class)
                 .addFilter(new JwtAuthorizationFilter(authMgr, getUserDetailsService()))
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
