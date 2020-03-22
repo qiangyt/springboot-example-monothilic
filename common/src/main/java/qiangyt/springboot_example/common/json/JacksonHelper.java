@@ -1,7 +1,6 @@
 package qiangyt.springboot_example.common.json;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,7 +9,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
 import lombok.Getter;
@@ -33,7 +31,7 @@ public class JacksonHelper {
   }
 
   public static void initMapper(ObjectMapper mapper) {
-    var dateModule = new SimpleModule();
+    // var dateModule = new SimpleModule();
 
     mapper.setSerializationInclusion(Include.NON_NULL);
     mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);

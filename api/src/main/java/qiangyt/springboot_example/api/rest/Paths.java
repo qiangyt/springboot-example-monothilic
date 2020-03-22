@@ -16,10 +16,15 @@ public interface Paths {
         final String findAllOrders          = "all";
     }
 
+    public static interface Auth {
+
+        final String BASE = Paths.BASE + "/auth";
+        final String signInByName = "signin/byName/{name}";
+    }
+
     public static interface Account {
 
         final String BASE = Paths.BASE + "/accounts";
-        final String signInByName = "signin/byName/{name}";
 
         final String getAccount               = "{accountId}";
         final String findAccountByName        = "query/byName/{name}";

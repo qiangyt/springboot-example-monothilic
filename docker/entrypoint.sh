@@ -7,4 +7,5 @@ set -x
 
 java -Djava.security.egd=file:/dev/./urandom \
      -Dspring.profiles.active=${SPRING_PROFILES_ACTIVE} \
+     ${JAVA_OPTS} \
      -jar /opt/app/server.jar

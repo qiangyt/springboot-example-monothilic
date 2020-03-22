@@ -2,8 +2,6 @@ package qiangyt.springboot_example.server.controller;
 
 import java.util.UUID;
 
-import javax.validation.constraints.NotBlank;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,7 +17,6 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import qiangyt.springboot_example.api.AccountAPI;
 import qiangyt.springboot_example.api.rest.Paths;
 import qiangyt.springboot_example.api.rnr.CreateAccountReq;
-import qiangyt.springboot_example.api.rnr.SignInResp;
 import qiangyt.springboot_example.server.config.ExposedViaSpringfox;
 import qiangyt.springboot_example.api.vo.Account;
 import lombok.Getter;
@@ -37,11 +34,6 @@ public class AccountRestController {
 
     @Autowired
     private AccountAPI accountAPI;
-
-    @PostMapping(path = Paths.Account.signInByName, consumes = APPLICATION_JSON_UTF8_VALUE)
-    public SignInResp signInByName(@PathVariable String name, @RequestBody @NotBlank String password) {
-        return getAccountAPI().signInByName(name, password);
-    }
 
     //@PreAuthorize("hasAuthority('ROLE_USER')")
     @PostMapping(path = Paths.Account.createAccount, consumes = APPLICATION_JSON_UTF8_VALUE)

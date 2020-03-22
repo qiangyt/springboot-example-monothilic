@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import lombok.Getter;
 import qiangyt.springboot_example.api.AccountAPI;
 import qiangyt.springboot_example.api.rnr.CreateAccountReq;
-import qiangyt.springboot_example.api.rnr.SignInResp;
 import qiangyt.springboot_example.api.vo.Account;
 import qiangyt.springboot_example.common.rest.SyncRestClient;
 
@@ -49,12 +48,6 @@ public class AccountAPIRestClient implements AccountAPI {
     public Account[] findAllAccounts() {
         return getClient().GET(Paths.Account.findAllAccounts, Account[].class);
     }
-
-    @Override
-    public SignInResp signInByName(String name, String password) {
-        return getClient().POST(Paths.Account.signInByName, password, SignInResp.class, name);
-    }
-
 
 
 }

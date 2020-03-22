@@ -3,23 +3,16 @@ package qiangyt.springboot_example.server.service;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import qiangyt.springboot_example.api.AccountAPI;
-import qiangyt.springboot_example.api.enums.AuthenticationTokenType;
 import qiangyt.springboot_example.api.rnr.CreateAccountReq;
-import qiangyt.springboot_example.api.rnr.SignInResp;
 import qiangyt.springboot_example.api.vo.Account;
 import qiangyt.springboot_example.common.error.NotFoundException;
 import qiangyt.springboot_example.server.entity.AccountEO;
 import qiangyt.springboot_example.server.repository.AccountRepository;
-import qiangyt.springboot_example.server.security.JwtHelper;
-import qiangyt.springboot_example.server.security.UserPrincipal;
 import lombok.Getter;
 
 
@@ -34,9 +27,6 @@ public class AccountService implements AccountAPI {
     @Autowired
     private AccountRepository accountRepository;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 
@@ -49,24 +39,6 @@ public class AccountService implements AccountAPI {
     public Account getAccount(UUID accountId) {
         var entity = getAccountRepository().findById(accountId);
         return renderAccount(entity.get());
-    }
-
-    @Override
-    public SignInResp signInByName(String name, String password) {
-        var authReq = new UsernamePasswordAuthenticationToken(name, password);
-        var authResult = getAuthenticationManager().authenticate(authReq);
-        SecurityContextHolder.getContext().setAuthentication(authResult);
-
-        var user = (UserPrincipal) authResult.getPrincipal();
-
-        String token = JwtHelper.sign(user.getUsername(), user.getPassword());
-
-        var r = new SignInResp();
-        r.setAccount(user.getAccount());
-        r.setTokenType(AuthenticationTokenType.bearer);
-        r.setToken(token);
-
-        return r;
     }
 
     @Override

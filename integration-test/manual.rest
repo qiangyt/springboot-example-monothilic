@@ -2,7 +2,12 @@
 GET http://localhost:8180/api/accounts/all
 
 ###
-POST http://localhost:8180/api/accounts/signin/byName/admin
+OPTIONS http://localhost:8180/api/auth/signin/byName/admin
+
+pwd
+
+###
+POST http://localhost:8180/api/auth/signin/byName/admin
 Content-Type: application/json; charset=utf-8
 
 pwd

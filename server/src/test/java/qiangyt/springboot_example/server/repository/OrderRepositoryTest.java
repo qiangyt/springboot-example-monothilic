@@ -37,7 +37,7 @@ public class OrderRepositoryTest {
             account1.setAddress("a1");
             account1.setName("n1");
             account1.setFirstName("f1");
-            account1.setSecondName("s1"); 
+            account1.setSecondName("s1");
             account1.setPassword("pwd1");
             account1.setRoles(AccountRole.admin.name());
             account1 = this.entityManager.persist(account1);
@@ -48,8 +48,8 @@ public class OrderRepositoryTest {
             account2.setName("n2");
             account2.setAddress("a2");
             account2.setFirstName("f2");
-            account2.setSecondName("s2");  
-            account2.setPassword("pwd2"); 
+            account2.setSecondName("s2");
+            account2.setPassword("pwd2");
             account2.setRoles(AccountRole.admin.name());
             account2 = this.entityManager.persist(account2);
         }
@@ -57,7 +57,7 @@ public class OrderRepositoryTest {
         var product = new ProductEO(); {
             product.setId(UUID.randomUUID());
             product.setAmount(99);
-            product.setName("p");  
+            product.setName("p");
             product = this.entityManager.persist(product);
         }
 
@@ -80,7 +80,7 @@ public class OrderRepositoryTest {
             account.setName("n");
             account.setAddress("a");
             account.setFirstName("f");
-            account.setSecondName("s"); 
+            account.setSecondName("s");
             account.setPassword("pwd");
             account.setRoles(AccountRole.admin.name());
             account = this.entityManager.persist(account);

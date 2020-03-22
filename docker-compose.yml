@@ -38,7 +38,9 @@ services:
       - WAIT_LIST=mysql:3306
       - WAIT_TIMEOUT=60
       - SPRING_PROFILES_ACTIVE=test
+      - JAVA_OPTS=-Djava.compiler=NONE -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=0.0.0.0:8888 -Xnoagent
     ports:
+      - 8888:8888
       - 8180:8180
       - 8181:8181
     volumes:

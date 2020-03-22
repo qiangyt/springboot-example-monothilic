@@ -27,6 +27,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private CachingUserDetailsService userDetailsService;
 
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         var authMgr = authenticationManager();
@@ -35,8 +36,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf().disable() // disable CSRF because it is unnecessary for JWT stateless approach
                 .authorizeRequests().anyRequest().permitAll() // permit all and we will use annotation to do authorization
                 .and()
+                //.cors()
                 //.addFilter(new JwtAuthenticationFilter(authMgr))
-                .addFilterBefore(new CORSFilter(), JwtAuthorizationFilter.class)
+                //.addFilterBefore(new CORSFilter(), JwtAuthorizationFilter.class)
                 .addFilter(new JwtAuthorizationFilter(authMgr, getUserDetailsService()))
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }

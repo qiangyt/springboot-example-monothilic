@@ -22,10 +22,10 @@ COPY server/src    ./server/src
 RUN mvn -B -Dmaven.gitcommitid.skip=true clean install
 
 # ------------------------------------------------------------------------------
-FROM openjdk:11.0.4-jdk
+FROM openjdk:11.0.6-jre-slim
 LABEL maintainer="qiangyt@wxcount.com"
 
-EXPOSE 8080 8081
+EXPOSE 8080 8081 8888
 WORKDIR /opt/app
 
 COPY docker/for-ever.sh   docker/wait-for-it.sh  docker/entrypoint.sh   ./
