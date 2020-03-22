@@ -14,9 +14,9 @@ import static org.mockito.Mockito.when;
 import java.util.Optional;
 import java.util.UUID;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -38,7 +38,7 @@ public class ProductServiceTest {
     private ProductService target;
     
     
-    @Before 
+    @BeforeEach
     public void initMocks() {
       MockitoAnnotations.initMocks(this);
     }
@@ -53,17 +53,19 @@ public class ProductServiceTest {
         when(this.productRepository.findById(id)).thenReturn(Optional.of(expected));
 
         var actual = this.target.loadProductEO(id);
-        Assert.assertSame(expected, actual);
+        Assertions.assertSame(expected, actual);
     }
 
 
-    @Test(expected = NotFoundException.class)
+    @Test
     public void loadProduct_not_found() {
         var id = UUID.randomUUID();
 
         when(this.productRepository.findById(id)).thenReturn(Optional.ofNullable(null));
 
-        this.target.loadProductEO(id);
+        Assertions.assertThrows(NotFoundException.class, () -> {
+            this.target.loadProductEO(id);
+        }, "load product should complain that the product entity is not found");
     }
 
 
@@ -83,7 +85,7 @@ public class ProductServiceTest {
         this.target.setOutOfProductNotifyThreshold(threshold);
         this.target.decreaseProductAmount(product, orderAmount);
 
-        Assert.assertEquals(productAmount - orderAmount, product.getAmount());
+        Assertions.assertEquals(productAmount - orderAmount, product.getAmount());
 
         verify(this.queueService, never()).notifyProductSoldOut(any());
     }
@@ -105,7 +107,7 @@ public class ProductServiceTest {
         this.target.setOutOfProductNotifyThreshold(threshold);
         this.target.decreaseProductAmount(product, orderAmount);
 
-        Assert.assertEquals(productAmount - orderAmount, product.getAmount());
+        Assertions.assertEquals(productAmount - orderAmount, product.getAmount());
 
         verify(this.queueService, times(1))
             .notifyProductSoldOut(ArgumentMatchers.argThat(msg -> {

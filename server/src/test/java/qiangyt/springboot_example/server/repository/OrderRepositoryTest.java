@@ -2,9 +2,8 @@ package qiangyt.springboot_example.server.repository;
 
 import java.util.UUID;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
@@ -19,7 +18,6 @@ import qiangyt.springboot_example.server.entity.ProductEO;
  * @author
  *
  */
-@RunWith(SpringRunner.class)
 @DataJpaTest
 public class OrderRepositoryTest {
 
@@ -69,8 +67,8 @@ public class OrderRepositoryTest {
         }
 
         var actual = this.repository.findByCustomerAccountId(account1.getId());
-        Assert.assertEquals(1, actual.size());
-        Assert.assertEquals(expected, actual.get(0));
+        Assertions.assertEquals(1, actual.size());
+        Assertions.assertEquals(expected, actual.get(0));
     }
 
     @Test
@@ -103,7 +101,7 @@ public class OrderRepositoryTest {
         //var order2 = this.entityManager.find(OrderEO.class, order.getId());
 
         var actual = this.repository.findByCustomerAccountId(UUID.randomUUID());
-        Assert.assertTrue(actual.isEmpty());
+        Assertions.assertTrue(actual.isEmpty());
     }
 
 }

@@ -14,9 +14,9 @@ import static org.mockito.Mockito.when;
 import java.util.Optional;
 import java.util.UUID;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -39,9 +39,8 @@ public class OrderServiceTest {
 
     @InjectMocks
     private OrderService target;
-    
-    
-    @Before 
+
+    @BeforeEach
     public void initMocks() {
       MockitoAnnotations.initMocks(this);
     }
@@ -56,17 +55,19 @@ public class OrderServiceTest {
         when(this.orderRepository.findById(id)).thenReturn(Optional.of(expected));
 
         var actual = this.target.loadOrderEO(id);
-        Assert.assertSame(expected, actual);
+        Assertions.assertSame(expected, actual);
     }
 
 
-    @Test(expected = NotFoundException.class)
+    @Test
     public void loadOrderEO_not_found() {
         var id = UUID.randomUUID();
 
         when(this.orderRepository.findById(id)).thenReturn(Optional.ofNullable(null));
-
-        this.target.loadOrderEO(id);
+        
+        Assertions.assertThrows(NotFoundException.class, () -> {
+            this.target.loadOrderEO(id);
+        }, "load order should complain that the order entity is not found");
     }
 
     @Test
@@ -108,15 +109,15 @@ public class OrderServiceTest {
         var actual = this.target.createOrder(req);
         verify(this.productService).decreaseProductAmount(product, req.getAmount());
 
-        Assert.assertEquals(orderId, actual.getId());
-        Assert.assertEquals("f s", actual.getCustomerName());
-        Assert.assertEquals(amount, actual.getAmount());
-        Assert.assertEquals("p", actual.getProductName());
+        Assertions.assertEquals(orderId, actual.getId());
+        Assertions.assertEquals("f s", actual.getCustomerName());
+        Assertions.assertEquals(amount, actual.getAmount());
+        Assertions.assertEquals("p", actual.getProductName());
     }
 
 
 
-    @Test(expected = BadRequestException.class)
+    @Test
     public void createOrder_productSoldOut() {
         var amount = 100;
 
@@ -136,7 +137,9 @@ public class OrderServiceTest {
         req.setCustomerAccountId(accountId);
         req.setProductId(productId);
         
-        this.target.createOrder(req);
+        Assertions.assertThrows(BadRequestException.class, () -> {
+            this.target.createOrder(req);
+        }, "create order should complain that the product is sold out");
     }
 
 }

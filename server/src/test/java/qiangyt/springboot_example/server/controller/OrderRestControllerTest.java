@@ -1,7 +1,6 @@
 package qiangyt.springboot_example.server.controller;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -9,7 +8,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import qiangyt.springboot_example.api.OrderAPI;
@@ -31,7 +29,6 @@ import java.util.List;
 import java.util.UUID;
 
 @ContextConfiguration(classes={OrderRestController.class, SecurityTestConfiguration.class})
-@RunWith(SpringRunner.class)
 @WebMvcTest(OrderRestController.class)
 public class OrderRestControllerTest {
 

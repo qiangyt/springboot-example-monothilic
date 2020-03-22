@@ -9,9 +9,9 @@ import static org.mockito.Mockito.when;
 import java.util.Optional;
 import java.util.UUID;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -28,7 +28,7 @@ public class AccountServiceTest {
     @InjectMocks
     private AccountService target;
     
-    @Before 
+    @BeforeEach
     public void initMocks() {
       MockitoAnnotations.initMocks(this);
     }
@@ -42,17 +42,19 @@ public class AccountServiceTest {
         when(this.accountRepository.findById(id)).thenReturn(Optional.of(expected));
 
         var actual = this.target.loadAccountEO(id);
-        Assert.assertSame(expected, actual);
+        Assertions.assertSame(expected, actual);
     }
 
 
-    @Test(expected = NotFoundException.class)
+    @Test
     public void loadAccountEO_not_found() {
         var id = UUID.randomUUID();
 
         when(this.accountRepository.findById(id)).thenReturn(Optional.ofNullable(null));
 
-        this.target.loadAccountEO(id);
+        Assertions.assertThrows(NotFoundException.class, () -> {
+            this.target.loadAccountEO(id);
+          }, "loadAccountEO should complain the entity not found");        
     }
 
     @Test
@@ -64,7 +66,7 @@ public class AccountServiceTest {
         when(this.accountRepository.findById(id)).thenReturn(Optional.of(expected));
 
         var actual = this.target.getAccount(id);
-        Assert.assertSame(expected.getId(), actual.getId());
+        Assertions.assertSame(expected.getId(), actual.getId());
     }
 
 }
