@@ -1,9 +1,34 @@
 pipeline {
-    agent { docker 'maven:3.3.3' }
+    agent any
+
+    environment {
+        registry = "hub.docker.com"
+        repository = "springboot-example-monothilic"
+        dockerImage = ''
+    }
+    
     stages {
-        stage('build') {
+        stage('Build Docker Image') {
             steps {
-                sh 'mvn package'
+                script {
+                    docker {
+                        dockerImage = docker.build(registry + "/" + repository)
+                    }
+                }
+                sh 'echo "Docker image built"'
+            }
+        }
+
+        stage('Image checks') {
+            when { branch 'master' }
+            stage('Test Image') {
+                steps {
+                    script {
+                    // TODO
+                    sh 'docker run --rm ' + registry + '/' + repository + ' java -version'
+                    sh 'echo "Image tests passed"'
+                    }
+                }
             }
         }
     }
