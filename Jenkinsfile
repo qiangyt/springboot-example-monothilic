@@ -21,9 +21,8 @@ pipeline {
 
         stage('Image checks') {
             when { branch 'master' }
-            stage('Test Image') {
-                steps {
-                    script {
+            steps {
+                script {
                     // TODO
                     sh 'docker run --rm ' + registry + '/' + repository + ' java -version'
                     sh 'echo "Image tests passed"'
