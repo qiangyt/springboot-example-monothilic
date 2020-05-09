@@ -10,12 +10,13 @@ pipeline {
     stages {
         stage('Build Docker Image') {
             steps {
-                script {
-                    docker {
-                        dockerImage = docker.build(registry + "/" + repository)
-                    }
-                }
-                sh 'echo "Docker image built"'
+                //script {
+                //    docker {
+                //        dockerImage = docker.build(registry + "/" + repository)
+                //    }
+                //}
+                //sh 'echo "Docker image built"'
+                sh 'docker build .'
             }
         }
     }
