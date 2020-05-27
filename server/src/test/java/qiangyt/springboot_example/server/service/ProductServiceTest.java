@@ -36,8 +36,8 @@ public class ProductServiceTest {
 
     @InjectMocks
     private ProductService target;
-    
-    
+
+
     @BeforeEach
     public void initMocks() {
       MockitoAnnotations.initMocks(this);
@@ -46,20 +46,20 @@ public class ProductServiceTest {
 
     @Test
     public void loadProduct_happy() {
-        var id = UUID.randomUUID();
+        UUID id = UUID.randomUUID();
 
-        var expected = new ProductEO();
+        ProductEO expected = new ProductEO();
         expected.setId(UUID.randomUUID());
         when(this.productRepository.findById(id)).thenReturn(Optional.of(expected));
 
-        var actual = this.target.loadProductEO(id);
+        ProductEO actual = this.target.loadProductEO(id);
         Assertions.assertSame(expected, actual);
     }
 
 
     @Test
     public void loadProduct_not_found() {
-        var id = UUID.randomUUID();
+        UUID id = UUID.randomUUID();
 
         when(this.productRepository.findById(id)).thenReturn(Optional.ofNullable(null));
 
@@ -71,12 +71,12 @@ public class ProductServiceTest {
 
     @Test
     public void decreaseProductAmount_notSoldout() {
-        var productId = UUID.randomUUID();
-        var orderAmount = 8;
-        var threshold = 10;
-        var productAmount = threshold + orderAmount + 1;
+        UUID productId = UUID.randomUUID();
+        int orderAmount = 8;
+        int threshold = 10;
+        int productAmount = threshold + orderAmount + 1;
 
-        var product = new ProductEO();
+        ProductEO product = new ProductEO();
         product.setId(productId);
         product.setAmount(productAmount);
 
@@ -93,12 +93,12 @@ public class ProductServiceTest {
 
     @Test
     public void decreaseProductAmount_soldout() {
-        var productId = UUID.randomUUID();
-        var orderAmount = 8;
-        var threshold = 10;
-        var productAmount = threshold + orderAmount;
+        UUID productId = UUID.randomUUID();
+        int orderAmount = 8;
+        int threshold = 10;
+        int productAmount = threshold + orderAmount;
 
-        var product = new ProductEO();
+        ProductEO product = new ProductEO();
         product.setId(productId);
         product.setAmount(productAmount);
 

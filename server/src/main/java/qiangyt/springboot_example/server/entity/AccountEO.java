@@ -28,24 +28,24 @@ import qiangyt.springboot_example.common.bean.BeanCopyer;
 public class AccountEO {
 
     public static final BeanCopyer<AccountEO, Account> VO_COPYER
-        = new BeanCopyer<>(AccountEO.class, Account.class, Account::new, Account[]::new) {
+        = new BeanCopyer<AccountEO, Account>(AccountEO.class, Account.class, Account::new, Account[]::new) {
             @Override public Account copy(AccountEO source) {
                 if (source == null) {
                     return null;
                 }
-                var r = super.copy(source);
+                Account r = super.copy(source);
                 r.setRoles(AccountRole.parse(source.getRoles()));
                 return r;
             }
         };
 
     public static final BeanCopyer<CreateAccountReq, AccountEO> REQ_COPYER
-    = new BeanCopyer<>(CreateAccountReq.class, AccountEO.class, AccountEO::new, AccountEO[]::new) {
+    = new BeanCopyer<CreateAccountReq, AccountEO>(CreateAccountReq.class, AccountEO.class, AccountEO::new, AccountEO[]::new) {
         @Override public AccountEO copy(CreateAccountReq source) {
             if (source == null) {
                 return null;
             }
-            var r = super.copy(source);
+            AccountEO r = super.copy(source);
             r.setRoles(AccountRole.format(source.getRoles()));
             return r;
         }

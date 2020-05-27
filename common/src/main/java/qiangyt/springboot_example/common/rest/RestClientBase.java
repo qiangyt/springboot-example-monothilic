@@ -4,6 +4,8 @@ import lombok.Getter;
 import qiangyt.springboot_example.common.error.*;
 import qiangyt.springboot_example.common.json.JsonHelper;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -34,7 +36,7 @@ public class RestClientBase {
             return "";
         }
 
-        var len = url.length();
+        int len = url.length();
         if (len == 0 || url.charAt(len - 1) != '/') {
             return url;
         }
@@ -43,40 +45,40 @@ public class RestClientBase {
     }
 
     public String buildUrl(String path) {
-        var base = getBaseUrl();
+        String base = getBaseUrl();
         if (base.length() == 0) {
             return path;
         }
 
-        var r = new StringBuilder(base.length() + "/".length() + path.length());
+        StringBuilder r = new StringBuilder(base.length() + "/".length() + path.length());
         r.append(base).append("/").append(path);
         return r.toString();
     }
 
     public HttpMessageConverter<?> messageConverter() {
-        var mapper = JsonHelper.buildMapper();
+        ObjectMapper mapper = JsonHelper.buildMapper();
         return new MappingJackson2HttpMessageConverter(mapper);
     }
 
     public HttpHeaders createRequestHeaders() {
-        var r = new HttpHeaders();
+        HttpHeaders r = new HttpHeaders();
         r.setContentType(MediaType.APPLICATION_JSON_UTF8);
         return r;
     }
 
     public <T> HttpEntity<T> createRequestEntity(T requestBody) {
-        var headers = createRequestHeaders();
+        HttpHeaders headers = createRequestHeaders();
         return new HttpEntity<>(requestBody, headers);
     }
 
     protected <T> T convertResponse(ResponseEntity<T> response) {
-        var status = response.getStatusCode();
+        HttpStatus status = response.getStatusCode();
         if (status.is2xxSuccessful()) {
             return response.getBody();
         }
 
         BaseException ex;
-        var msg = String.format("%d %s: %s", status.value(), status.name(), status.getReasonPhrase());
+        String msg = String.format("%d %s: %s", status.value(), status.name(), status.getReasonPhrase());
 
         if (isConvertToInternalError()) {
             ex = new InternalException(msg);

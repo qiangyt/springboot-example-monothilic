@@ -20,7 +20,7 @@ public interface OrderAPI {
     Order getOrder(@NotNull UUID orderId);
 
     default Order loadOrder(@NotNull UUID orderId) {
-        var r = getOrder(orderId);
+        Order r = getOrder(orderId);
         if (r == null) {
             throw new NotFoundException("order(id=%s) not found", orderId);
         }
@@ -30,7 +30,7 @@ public interface OrderAPI {
     OrderDetail getOrderDetail(@NotNull UUID orderId);
 
     Order createOrder(@Valid CreateOrderReq request);
-    
+
     Order[] findOrdersByCustomerAccountId(@NotNull UUID customerAccountId);
 
     void deleteOrder(@NotNull UUID orderId);

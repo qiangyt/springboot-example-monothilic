@@ -30,7 +30,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        var authMgr = authenticationManager();
+        AuthenticationManager authMgr = authenticationManager();
 
         http.cors().and()
                 .csrf().disable() // disable CSRF because it is unnecessary for JWT stateless approach

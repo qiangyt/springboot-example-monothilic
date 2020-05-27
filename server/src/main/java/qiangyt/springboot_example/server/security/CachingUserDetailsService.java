@@ -55,13 +55,13 @@ implements UserDetailsService {
 
 	@PostConstruct
 	public void init() throws Exception {
-        var userCache = new SpringCacheBasedUserCache(getCacheManager().getCache("jwt-cache"));
+        SpringCacheBasedUserCache userCache = new SpringCacheBasedUserCache(getCacheManager().getCache("jwt-cache"));
         setUserCache(userCache);
 	}
 
 
 	public UserDetails loadUserByUsername(String userName) {
-		var u = getUserCache().getUserFromCache(userName);
+		UserDetails u = getUserCache().getUserFromCache(userName);
 
 		if (u == null) {
 			u = getTarget().loadUserByUsername(userName);

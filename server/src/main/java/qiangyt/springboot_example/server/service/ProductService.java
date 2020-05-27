@@ -1,5 +1,6 @@
 package qiangyt.springboot_example.server.service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,7 @@ public class ProductService implements ProductAPI {
 
     @Override
     public Product getProduct(UUID productId) {
-        var entity = getProductRepository().findById(productId);
+        Optional<ProductEO> entity = getProductRepository().findById(productId);
         return renderProduct(entity.get());
     }
 
@@ -57,17 +58,17 @@ public class ProductService implements ProductAPI {
 
 
     public ProductEO loadProductEO(UUID productId) {
-        var entity = getProductRepository().findById(productId);
-        if (entity.isEmpty()) {
+        Optional<ProductEO> entity = getProductRepository().findById(productId);
+        if (!entity.isPresent()) {
             throw new NotFoundException("product(id=%s) not found", productId);
         }
         return entity.get();
     }
 
-    
+
     @Override
     public Product createProduct(CreateProductReq request) {
-        var product = new ProductEO();
+        ProductEO product = new ProductEO();
         product.setId(UUID.randomUUID());
         product.setName(request.getName());
         product.setAmount(request.getAmount());
@@ -78,13 +79,13 @@ public class ProductService implements ProductAPI {
 
     @Override
     public void deleteProduct(UUID productId) {
-        var entity = loadProductEO(productId);
+        ProductEO entity = loadProductEO(productId);
         getProductRepository().delete(entity);
     }
 
     @Override
     public Product[] findAllProducts() {
-        var entities = getProductRepository().findAll();
+        Iterable<ProductEO> entities = getProductRepository().findAll();
         return renderProducts(entities);
     }
 
@@ -96,7 +97,7 @@ public class ProductService implements ProductAPI {
         getProductRepository().save(product);
 
         if (product.getAmount() <= getOutOfProductNotifyThreshold()) {
-            var msg = new ProductSoldOutMessage();
+            ProductSoldOutMessage msg = new ProductSoldOutMessage();
             msg.setProductId(product.getId());
             msg.setRemainingAmount(remainingAmount);
 
@@ -108,6 +109,6 @@ public class ProductService implements ProductAPI {
     public void handleProductSoldOutNotification(ProductSoldOutMessage message) {
         log.warn("product(id={}) will be sold out soon. remainingAmount={}", message.getProductId(), message.getRemainingAmount());
     }
-    
+
 
 }

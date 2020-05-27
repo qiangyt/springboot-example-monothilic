@@ -31,23 +31,23 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
 
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) 
+    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
         throws AuthenticationException {
 
-        var username = request.getParameter("username");
-        var password = request.getParameter("password");
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
 
-        var token = new UsernamePasswordAuthenticationToken(username, password);
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
         setDetails(request, token);
-        
+
         return getAuthenticationManager().authenticate(token);
     }
 
-    
+
     @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) 
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult)
         throws IOException, ServletException {
-        
+
         response.setHeader("Content-Type", MediaType.APPLICATION_JSON_UTF8_VALUE);
         response.setStatus(HttpStatus.OK.value());
 
@@ -59,12 +59,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
 
     @Override
-    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) 
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed)
         throws IOException, ServletException {
-        
+
         response.setHeader("Content-Type", MediaType.APPLICATION_JSON_UTF8_VALUE);
         response.setStatus(HttpStatus.BAD_REQUEST.value());
-        
+
         response.getWriter().write("failed to authenticate");
     }
 

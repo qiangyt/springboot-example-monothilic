@@ -1,6 +1,7 @@
 package qiangyt.springboot_example.common.bean;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -45,7 +46,7 @@ public class BeanCopyer<SOURCE,TARGET> {
         if (source == null) {
             return null;
         }
-        var r = newTarget();
+        TARGET r = newTarget();
         getCopier().copy(source, r, null);
         return r;
     }
@@ -55,8 +56,8 @@ public class BeanCopyer<SOURCE,TARGET> {
             return null;
         }
 
-        var r = new ArrayList<TARGET>();
-        for (var src: sources) {
+        List<TARGET> r = new ArrayList<>();
+        for (SOURCE src: sources) {
             r.add(copy(src));
         }
 

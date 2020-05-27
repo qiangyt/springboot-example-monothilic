@@ -1,5 +1,6 @@
 package qiangyt.springboot_example.server.service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,13 +38,13 @@ public class AccountService implements AccountAPI {
 
     @Override
     public Account getAccount(UUID accountId) {
-        var entity = getAccountRepository().findById(accountId);
+        Optional<AccountEO> entity = getAccountRepository().findById(accountId);
         return renderAccount(entity.get());
     }
 
     @Override
     public Account findAccountByName(String name) {
-        var entity = findAccountEntityByName(name);
+        AccountEO entity = findAccountEntityByName(name);
         return renderAccount(entity);
     }
 
@@ -59,8 +60,8 @@ public class AccountService implements AccountAPI {
 
 
     public AccountEO loadAccountEO(UUID accountId) {
-        var entity = getAccountRepository().findById(accountId);
-        if (entity.isEmpty()) {
+        Optional<AccountEO> entity = getAccountRepository().findById(accountId);
+        if (!entity.isPresent()) {
             throw new NotFoundException("account(id=%s) not found", accountId);
         }
         return entity.get();
@@ -68,7 +69,7 @@ public class AccountService implements AccountAPI {
 
     @Override
     public Account createAccount(CreateAccountReq request) {
-        var account = AccountEO.REQ_COPYER.copy(request);
+        AccountEO account = AccountEO.REQ_COPYER.copy(request);
         account.setId(UUID.randomUUID());
         account.setPassword(getPasswordEncoder().encode(request.getPassword()));
 
@@ -78,13 +79,13 @@ public class AccountService implements AccountAPI {
 
     @Override
     public void deleteAccount(UUID accountId) {
-        var entity = loadAccountEO(accountId);
+        AccountEO entity = loadAccountEO(accountId);
         getAccountRepository().delete(entity);
     }
 
     @Override
     public Account[] findAllAccounts() {
-        var entities = getAccountRepository().findAll();
+        Iterable<AccountEO> entities = getAccountRepository().findAll();
         return renderAccounts(entities);
     }
 

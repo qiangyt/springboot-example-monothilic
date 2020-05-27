@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import qiangyt.springboot_example.api.OrderAPI;
 import qiangyt.springboot_example.api.rnr.CreateOrderReq;
@@ -25,7 +26,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.List;
+import java.util.Arrays;
 import java.util.UUID;
 
 @ContextConfiguration(classes={OrderRestController.class, SecurityTestConfiguration.class})
@@ -34,7 +35,7 @@ public class OrderRestControllerTest {
 
 	@Autowired
 	MockMvc mvc;
-	
+
 	@MockBean
 	OrderAPI orderAPI;
 
@@ -42,12 +43,12 @@ public class OrderRestControllerTest {
 	@WithMockUser(roles="customer")
 	public void createOrder() throws Exception {
 
-		var createOrder = new CreateOrderReq();
+		CreateOrderReq createOrder = new CreateOrderReq();
 		createOrder.setAmount(2);
 		createOrder.setCustomerAccountId(UUID.randomUUID());
 		createOrder.setProductId(UUID.randomUUID());
-		
-		var order = new Order();
+
+		Order order = new Order();
 		order.setAmount(createOrder.getAmount());
 		order.setCustomerName("n");
 		order.setId(UUID.randomUUID());
@@ -55,10 +56,10 @@ public class OrderRestControllerTest {
 
 		given(this.orderAPI.createOrder(createOrder)).willReturn(order);
 
-		var reqBuilder = post("/api/orders")
+		MockHttpServletRequestBuilder reqBuilder = post("/api/orders")
 						.content(JsonHelper.to(createOrder))
 						.contentType(MediaType.APPLICATION_JSON_UTF8);
-						
+
 		mvc.perform(reqBuilder)
 			.andExpect(status().isCreated())
 			.andExpect(content().json(JsonHelper.to(order)));
@@ -67,28 +68,28 @@ public class OrderRestControllerTest {
 
 	@Test
 	public void findOrdersByCustomerAccountId() throws Exception {
-		var customerAccountId = UUID.randomUUID();
-		
-		var order = new Order();
+		UUID customerAccountId = UUID.randomUUID();
+
+		Order order = new Order();
 		order.setAmount(2);
 		order.setCustomerName("n");
 		order.setId(UUID.randomUUID());
 		order.setProductName("p");
 
-		var orders = new Order[]{order};
+		Order[] orders = new Order[]{order};
 
 		given(this.orderAPI.findOrdersByCustomerAccountId(customerAccountId)).willReturn(orders);
 
 		mvc.perform(get("/api/orders/query/byCustomerAccountId?customerAccountId={customerAccountId}", customerAccountId))
             .andExpect(status().isOk())
 			.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-			.andExpect(content().json(JsonHelper.to(List.of(order))));
+			.andExpect(content().json(JsonHelper.to(Arrays.asList(order))));
 	}
 
 
 	@Test
 	public void deleteOrder() throws Exception {
-		var orderId = UUID.randomUUID();
+		UUID orderId = UUID.randomUUID();
 
 		Mockito.doNothing().when(this.orderAPI).deleteOrder(orderId);
 
@@ -98,9 +99,9 @@ public class OrderRestControllerTest {
 
 	@Test
 	public void getOrder() throws Exception {
-		var orderId = UUID.randomUUID();
-		
-		var order = new Order();
+		UUID orderId = UUID.randomUUID();
+
+		Order order = new Order();
 		order.setAmount(6);
 		order.setCustomerName("n");
 		order.setId(orderId);
@@ -108,8 +109,8 @@ public class OrderRestControllerTest {
 
 		given(this.orderAPI.getOrder(orderId)).willReturn(order);
 
-		var reqBuilder = get("/api/orders/{orderId}", orderId);
-						
+		MockHttpServletRequestBuilder reqBuilder = get("/api/orders/{orderId}", orderId);
+
 		mvc.perform(reqBuilder)
 			.andExpect(status().isOk())
 			.andExpect(content().json(JsonHelper.to(order)));
@@ -117,20 +118,20 @@ public class OrderRestControllerTest {
 
 	@Test
 	public void getOrderDetail() throws Exception {
-		var orderId = UUID.randomUUID();
-		
-		var customerAccount = new Account();
+		UUID orderId = UUID.randomUUID();
+
+		Account customerAccount = new Account();
 		customerAccount.setId(UUID.randomUUID());
 		customerAccount.setAddress("a");
 		customerAccount.setFirstName("f");
 		customerAccount.setSecondName("s");
 
-		var product = new Product();
+		Product product = new Product();
 		product.setId(UUID.randomUUID());
 		product.setAmount(8);
 		product.setName("p");
 
-		var order = new OrderDetail();
+		OrderDetail order = new OrderDetail();
 		order.setAmount(6);
 		order.setId(orderId);
 		order.setCustomerAccount(customerAccount);
@@ -138,8 +139,8 @@ public class OrderRestControllerTest {
 
 		given(this.orderAPI.getOrderDetail(orderId)).willReturn(order);
 
-		var reqBuilder = get("/api/orders/detail/{orderId}", orderId);
-						
+		MockHttpServletRequestBuilder reqBuilder = get("/api/orders/detail/{orderId}", orderId);
+
 		mvc.perform(reqBuilder)
 			.andExpect(status().isOk())
 			.andExpect(content().json(JsonHelper.to(order)));
@@ -147,24 +148,24 @@ public class OrderRestControllerTest {
 
 	@Test
 	public void findAllOrders() throws Exception {
-		var order1 = new Order();
+		Order order1 = new Order();
 		order1.setAmount(1);
 		order1.setCustomerName("n1");
 		order1.setId(UUID.randomUUID());
 		order1.setProductName("p1");
 
-		var order2 = new Order();
+		Order order2 = new Order();
 		order2.setAmount(2);
 		order2.setCustomerName("n2");
 		order2.setId(UUID.randomUUID());
 		order2.setProductName("p2");
 
-		var orders = new Order[]{order1, order2};
+		Order[] orders = new Order[]{order1, order2};
 
 		given(this.orderAPI.findAllOrders()).willReturn(orders);
 
-		var reqBuilder = get("/api/orders/all");
-						
+		MockHttpServletRequestBuilder reqBuilder = get("/api/orders/all");
+
 		mvc.perform(reqBuilder)
 			.andExpect(status().isOk())
 			.andExpect(content().json(JsonHelper.to(orders)));

@@ -26,7 +26,7 @@ public class CustomErrorController implements ErrorController {
 
     @RequestMapping("/error")
     public String handleError(HttpServletRequest request, HttpServletResponse response) {
-        var msg = request.getAttribute("javax.servlet.error.message");
+        Object msg = request.getAttribute("javax.servlet.error.message");
         return JsonHelper.to(msg);
     }
 }

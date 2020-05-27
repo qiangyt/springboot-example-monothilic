@@ -25,7 +25,7 @@ public class ExceptionHelper {
    * @return
    */
   public static Throwable getRootCause(Throwable error) {
-    var ex = error;
+    Throwable ex = error;
 
     while (true) {
       Throwable cause;

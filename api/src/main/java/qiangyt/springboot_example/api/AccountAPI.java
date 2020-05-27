@@ -21,7 +21,7 @@ public interface AccountAPI {
     Account getAccount(@NotNull UUID accountId);
 
     default Account loadAccount(@NotNull UUID accountId) {
-        var r = getAccount(accountId);
+        Account r = getAccount(accountId);
         if (r == null) {
             throw new NotFoundException("account(id=%s) not found", accountId);
         }

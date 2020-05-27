@@ -1,5 +1,6 @@
 package qiangyt.springboot_example.common.rest;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -40,8 +41,8 @@ public class ExceptionAdvise {
 
   @ExceptionHandler(Throwable.class)
   public ResponseEntity<List<String>> handleError(Throwable ex) {
-    var status = translateExceptionToStatus(ex);
-    var response = translateExceptionToExceptionResponse(ex);
+    HttpStatus status = translateExceptionToStatus(ex);
+    List<String> response = translateExceptionToExceptionResponse(ex);
 
     if (status == HttpStatus.INTERNAL_SERVER_ERROR) {
       log.error(response.toString(), ex);
@@ -68,7 +69,7 @@ public class ExceptionAdvise {
   }
 
   private static String getMessage(ObjectError objError) {
-    return String.format("%s: %s", List.of(objError.getArguments()), objError.getDefaultMessage());
+    return String.format("%s: %s", Arrays.asList(objError.getArguments()), objError.getDefaultMessage());
   }
 
   private static String getMessage(ConstraintViolation<?> violation) {

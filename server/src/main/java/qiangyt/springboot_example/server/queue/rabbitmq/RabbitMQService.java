@@ -24,7 +24,7 @@ public class RabbitMQService implements QueueService {
 
     @Override
     public void notifyProductSoldOut(ProductSoldOutMessage message) {
-        var msgPayload = JsonHelper.to(message); // TODO: gRPC msg?
+        String msgPayload = JsonHelper.to(message); // TODO: gRPC msg?
         getTemplate().convertAndSend(getProductSoldOutNotifyQueueName(), msgPayload);
     }
 

@@ -1,5 +1,7 @@
 package qiangyt.springboot_example.server.service;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,9 @@ import qiangyt.springboot_example.api.vo.OrderDetail;
 import qiangyt.springboot_example.api.vo.Order;
 import qiangyt.springboot_example.common.error.BadRequestException;
 import qiangyt.springboot_example.common.error.NotFoundException;
+import qiangyt.springboot_example.server.entity.AccountEO;
 import qiangyt.springboot_example.server.entity.OrderEO;
+import qiangyt.springboot_example.server.entity.ProductEO;
 import qiangyt.springboot_example.server.repository.OrderRepository;
 import qiangyt.springboot_example.server.misc.OrderCopyer;
 import qiangyt.springboot_example.server.misc.OrderDetailCopyer;
@@ -57,20 +61,20 @@ public class OrderService implements OrderAPI {
 
     @Override
     public Order getOrder(UUID orderId) {
-        var entity = getOrderRepository().findById(orderId);
+        Optional<OrderEO> entity = getOrderRepository().findById(orderId);
         return renderOrder(entity.get());
     }
 
 
     @Override
     public OrderDetail getOrderDetail(UUID orderId) {
-        var entity = getOrderRepository().findById(orderId);
+        Optional<OrderEO> entity = getOrderRepository().findById(orderId);
         return renderOrderDetail(entity.get());
     }
 
     public OrderEO loadOrderEO(UUID orderId) {
-        var entity = getOrderRepository().findById(orderId);
-        if (entity.isEmpty()) {
+        Optional<OrderEO> entity = getOrderRepository().findById(orderId);
+        if(!entity.isPresent()) {
             throw new NotFoundException("order(id=%s) not found", orderId);
         }
         return entity.get();
@@ -79,8 +83,8 @@ public class OrderService implements OrderAPI {
 
     @Override
     public Order createOrder(CreateOrderReq request) {
-        var customerAccount = getAccountService().loadAccountEO(request.getCustomerAccountId());
-        var product = getProductService().loadProductEO(request.getProductId());
+        AccountEO customerAccount = getAccountService().loadAccountEO(request.getCustomerAccountId());
+        ProductEO product = getProductService().loadProductEO(request.getProductId());
 
         int amount = request.getAmount();
         int remainingAmount = product.getAmount() - amount;
@@ -88,35 +92,35 @@ public class OrderService implements OrderAPI {
             throw new BadRequestException("product %s is sold out", product.getName());
         }
 
-        var order = new OrderEO();
+        OrderEO order = new OrderEO();
         order.setId(UUID.randomUUID());
         order.setCustomerAccount(customerAccount);
         order.setProduct(product);
         order.setAmount(amount);
 
         getProductService().decreaseProductAmount(product, amount);
-        
+
         return renderOrder(getOrderRepository().save(order));
     }
 
-    
+
     @Override
     public Order[] findOrdersByCustomerAccountId(UUID customerAccountId) {
-        var entities = getOrderRepository().findByCustomerAccountId(customerAccountId);
+        List<OrderEO> entities = getOrderRepository().findByCustomerAccountId(customerAccountId);
         return renderOrders(entities);
     }
 
 
     @Override
     public void deleteOrder(UUID orderId) {
-        var entity = loadOrderEO(orderId);
+        OrderEO entity = loadOrderEO(orderId);
         getOrderRepository().delete(entity);
     }
 
 
     @Override
     public Order[] findAllOrders() {
-        var entities = getOrderRepository().findAll();
+        Iterable<OrderEO> entities = getOrderRepository().findAll();
         return renderOrders(entities);
     }
 

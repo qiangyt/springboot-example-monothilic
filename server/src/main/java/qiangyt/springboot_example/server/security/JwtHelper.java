@@ -6,8 +6,10 @@ package qiangyt.springboot_example.server.security;
 import java.util.Date;
 
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 
 
 /**
@@ -15,13 +17,13 @@ import com.auth0.jwt.exceptions.JWTDecodeException;
  *          org.inlighting.security.util.JwtUtil
  */
 public class JwtHelper {
-    
+
     private final static long EXPIRE_TIME = 5 * 60 * 1000;
 
     public static String sign(String username, String secret) {
-        var expireDate = new Date(System.currentTimeMillis() + EXPIRE_TIME);
+        Date expireDate = new Date(System.currentTimeMillis() + EXPIRE_TIME);
         try {
-            var algorithm = Algorithm.HMAC256(secret);
+            Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.create()
                     .withClaim("username", username)
                     .withExpiresAt(expireDate)
@@ -31,11 +33,11 @@ public class JwtHelper {
         }
     }
 
-    
+
     public static boolean verify(String token, String username, String secret) {
         try {
-            var algorithm = Algorithm.HMAC256(secret);
-            var verifier = JWT.require(algorithm)
+            Algorithm algorithm = Algorithm.HMAC256(secret);
+            JWTVerifier verifier = JWT.require(algorithm)
                     .withClaim("username", username)
                     .build();
             /*var jwt = */verifier.verify(token);
@@ -45,10 +47,10 @@ public class JwtHelper {
         }
     }
 
-    
+
     public static String getUsername(String token) {
         try {
-            var jwt = JWT.decode(token);
+            DecodedJWT jwt = JWT.decode(token);
             return jwt.getClaim("username").asString();
         } catch (JWTDecodeException e) {
             return null; //TODO

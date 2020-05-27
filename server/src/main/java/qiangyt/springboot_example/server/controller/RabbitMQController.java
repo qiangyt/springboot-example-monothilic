@@ -25,7 +25,7 @@ public class RabbitMQController {
         log.debug("receive product-sold-out message: {}", messageText);
       }
 
-      var msg = JsonHelper.from(messageText, ProductSoldOutMessage.class);
+      ProductSoldOutMessage msg = JsonHelper.from(messageText, ProductSoldOutMessage.class);
 
       //TODO: configure the queue, to post to a dead letter queue after retry several times
       try {

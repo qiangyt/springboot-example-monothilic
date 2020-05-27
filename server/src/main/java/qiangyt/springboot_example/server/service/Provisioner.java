@@ -1,5 +1,7 @@
 package qiangyt.springboot_example.server.service;
 
+import java.util.UUID;
+
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +55,7 @@ public class Provisioner {
     public void init() {
         Account c1 = getAccountAPI().findAccountByName("admin");
         if (c1 == null) {
-            var req = new CreateAccountReq();
+            CreateAccountReq req = new CreateAccountReq();
             req.setAddress("ca");
             req.setName("admin");
             req.setFirstName("fn");
@@ -65,17 +67,17 @@ public class Provisioner {
 
         Product p1;
         if (getProductRepository().count() == 0) {
-            var req = new CreateProductReq();
+            CreateProductReq req = new CreateProductReq();
             req.setAmount(99);
             req.setName("pn");
             p1 = getProductAPI().createProduct(req);
         } else {
-            var productId = getProductRepository().findAll().iterator().next().getId();
+            UUID productId = getProductRepository().findAll().iterator().next().getId();
             p1 = getProductAPI().loadProduct(productId);
         }
 
         if (getOrderRepository().count() == 0) {
-            var req = new CreateOrderReq();
+            CreateOrderReq req = new CreateOrderReq();
             req.setAmount(3);
             req.setCustomerAccountId(c1.getId());
             req.setProductId(p1.getId());

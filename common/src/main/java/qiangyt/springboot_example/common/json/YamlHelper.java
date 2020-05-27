@@ -14,8 +14,8 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 public class YamlHelper {
 
   public static final ThreadLocal<JacksonHelper> MAPPER = ThreadLocal.withInitial(() -> {
-      var fac = new YAMLFactory();
-      var mapper = new ObjectMapper(fac);
+      YAMLFactory fac = new YAMLFactory();
+      ObjectMapper mapper = new ObjectMapper(fac);
       return new JacksonHelper(mapper);
   });
 
@@ -26,7 +26,7 @@ public class YamlHelper {
   public static String to(Object object) {
     return to(object, false);
   }
-  
+
   public static String to(Object object, boolean pretty) {
     return MAPPER.get().to(object, pretty);
   }
@@ -35,7 +35,7 @@ public class YamlHelper {
     MAPPER.get().fromArray(jsonArray, result, resultClazz);
   }
 
-  
+
   public static <T> T from(String json, Class<T> clazz) {
     return MAPPER.get().from(json, clazz);
   }

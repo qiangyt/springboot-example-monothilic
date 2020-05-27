@@ -1,5 +1,6 @@
 package qiangyt.springboot_example.common.misc;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
@@ -59,16 +60,16 @@ public class StringHelperTest {
 
   @Test
   public void test_hasBlank_happy() {
-    Assertions.assertEquals("", StringHelper.hasBlank(List.of("a", "")));
-    Assertions.assertEquals("   ", StringHelper.hasBlank(List.of("b", "   ")));
-    Assertions.assertNull(StringHelper.hasBlank(List.of("a", "b")));
+    Assertions.assertEquals("", StringHelper.hasBlank(Arrays.asList("a", "")));
+    Assertions.assertEquals("   ", StringHelper.hasBlank(Arrays.asList("b", "   ")));
+    Assertions.assertNull(StringHelper.hasBlank(Arrays.asList("a", "b")));
   }
 
 
   @Test
   public void test_trim_happy() {
-    var expected = List.of("a", "b");
-    Assertions.assertEquals(expected, StringHelper.trim(List.of(" a", "b   ")));
+    List<String> expected = Arrays.asList("a", "b");
+    Assertions.assertEquals(expected, StringHelper.trim(Arrays.asList(" a", "b   ")));
   }
 
 }

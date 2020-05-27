@@ -13,12 +13,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class JsonHelper {
 
   public static final ThreadLocal<JacksonHelper> MAPPER = ThreadLocal.withInitial(() -> {
-      var mapper = new ObjectMapper();
+    ObjectMapper mapper = new ObjectMapper();
       return new JacksonHelper(mapper);
   });
-  
+
   public static ObjectMapper buildMapper() {
-    var r = new ObjectMapper();
+    ObjectMapper r = new ObjectMapper();
     JacksonHelper.initMapper(r);
     return r;
   }
@@ -30,7 +30,7 @@ public class JsonHelper {
   public static String to(Object object) {
     return to(object, false);
   }
-  
+
   public static String to(Object object, boolean pretty) {
     return MAPPER.get().to(object, pretty);
   }
@@ -39,7 +39,7 @@ public class JsonHelper {
     MAPPER.get().fromArray(jsonArray, result, resultClazz);
   }
 
-  
+
   public static <T> T from(String json, Class<T> clazz) {
     return MAPPER.get().from(json, clazz);
   }

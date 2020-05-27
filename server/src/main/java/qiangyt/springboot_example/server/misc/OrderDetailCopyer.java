@@ -14,11 +14,11 @@ public class OrderDetailCopyer extends BeanCopyer<OrderEO, OrderDetail> {
     }
 
     public OrderDetail copy(OrderEO source) {
-        var r = super.copy(source);
+        OrderDetail r = super.copy(source);
         if (r == null) {
             return null;
         }
-     
+
         r.setCustomerAccount(AccountEO.VO_COPYER.copy(source.getCustomerAccount()));
         r.setProduct(ProductEO.VO_COPYER.copy(source.getProduct()));
 

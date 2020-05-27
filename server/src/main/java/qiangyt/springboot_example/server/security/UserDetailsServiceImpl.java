@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import lombok.Getter;
 import qiangyt.springboot_example.api.enums.AccountRole;
+import qiangyt.springboot_example.api.vo.Account;
 import qiangyt.springboot_example.server.entity.AccountEO;
 import qiangyt.springboot_example.server.service.AccountService;
 
@@ -25,11 +26,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        var accountEO = getAccountService().findAccountEntityByName(userName);
+        AccountEO accountEO = getAccountService().findAccountEntityByName(userName);
         if (accountEO == null) {
             throw new UsernameNotFoundException("user " + userName + " not found");
         }
-        var account = AccountEO.VO_COPYER.copy(accountEO);
+        Account account = AccountEO.VO_COPYER.copy(accountEO);
 
         return new UserPrincipal(account, userName, accountEO.getPassword(), AccountRole.toGrantedAuthorities(account.getRoles()));
     }

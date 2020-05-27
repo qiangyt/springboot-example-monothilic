@@ -45,9 +45,9 @@ public class StringHelper {
    * @return
    */
   public static <T> String join(String separator, T... objects) {
-    var r = new StringBuilder(objects.length * 64);
-    var isFirst = true;
-    for (var obj : objects) {
+    StringBuilder r = new StringBuilder(objects.length * 64);
+    boolean isFirst = true;
+    for (T obj : objects) {
       if (isFirst) {
         isFirst = false;
       } else {
@@ -77,7 +77,7 @@ public class StringHelper {
    * @return the first blank string if found, otherwise, return null
    */
   public static String hasBlank(Iterable<String> textIterable) {
-    for (var t : textIterable) {
+    for (String t : textIterable) {
       if (isBlank(t)) {
         return t;
       }
@@ -91,9 +91,9 @@ public class StringHelper {
    * @return
    */
   public static List<String> trim(Iterable<String> textIterable) {
-    var r = new ArrayList<String>();
+    List<String> r = new ArrayList<>();
 
-    for (var t : textIterable) {
+    for (String t : textIterable) {
       r.add(t.trim());
     }
 

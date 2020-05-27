@@ -35,7 +35,7 @@ public class SyncRestClient extends RestClientBase {
     protected <REQ,RESP> RESP doSend(REQ requestBody, Function<HttpEntity<REQ>,ResponseEntity<RESP>> function) {
         ResponseEntity<RESP> resp;
         try {
-            var reqEntity = createRequestEntity(requestBody);
+            HttpEntity<REQ> reqEntity = createRequestEntity(requestBody);
             resp = function.apply(reqEntity);
         } catch (ResourceAccessException rae) {
             throw new WrappedException(rae);
@@ -45,12 +45,12 @@ public class SyncRestClient extends RestClientBase {
     }
 
     public <T> T send(String path, HttpMethod method, Object requestBody, Class<T> responseType, Object... uriVariables) {
-        var url = buildUrl(path);
+        String url = buildUrl(path);
         return doSend(requestBody, reqEntity -> getRestTemplate().exchange(url, method, reqEntity, responseType, uriVariables));
     }
 
     public <T> T send(String path, HttpMethod method, Object requestBody, Class<T> responseType, Map<String, ?> uriVariables) {
-        var url = buildUrl(path);
+        String url = buildUrl(path);
         return doSend(requestBody, reqEntity -> getRestTemplate().exchange(url, method, reqEntity, responseType, uriVariables));
     }
 

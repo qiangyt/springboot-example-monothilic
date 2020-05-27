@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -19,8 +21,8 @@ public enum AccountRole {
 
 
     public static Collection<GrantedAuthority> toGrantedAuthorities(AccountRole[] roles) {
-        var roleNames = new HashSet<String>();
-        for (var role: roles) {
+        Set<String> roleNames = new HashSet<>();
+        for (AccountRole role: roles) {
             roleNames.add(role.name());
         }
         return AuthorityUtils.createAuthorityList(roleNames.toArray(new String[roleNames.size()]));
@@ -35,8 +37,8 @@ public enum AccountRole {
             return new AccountRole[0];
         }
 
-        var r = new ArrayList<AccountRole>();
-        for (var roleName : roles.split(",")) {
+        List<AccountRole> r = new ArrayList<>();
+        for (String roleName : roles.split(",")) {
             if (roleName == null) {
                 continue;
             }
@@ -45,7 +47,7 @@ public enum AccountRole {
                 continue;
             }
 
-            var role = valueOf(roleName);
+            AccountRole role = valueOf(roleName);
             if (role == null) {
                 continue; //TODO: warning
             }

@@ -34,10 +34,10 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) 
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
         throws IOException, ServletException {
 
-        var token = getAuthentication(request);
+        UsernamePasswordAuthenticationToken token = getAuthentication(request);
         if (token != null) {
             SecurityContextHolder.getContext().setAuthentication(token);
         }
@@ -47,13 +47,13 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
 
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
-        var header = request.getHeader(HttpHeaders.AUTHORIZATION);
+        String header = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (header == null || !header.startsWith("Bearer ")) {
             return null;
         }
 
-        var token = header.split(" ")[1];
-        var username = JwtHelper.getUsername(token);
+        String token = header.split(" ")[1];
+        String username = JwtHelper.getUsername(token);
         UserDetails userDetails = null;
         try {
             userDetails = getUserDetailsService().loadUserByUsername(username);

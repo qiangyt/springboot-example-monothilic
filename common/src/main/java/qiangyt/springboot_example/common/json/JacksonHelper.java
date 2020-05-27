@@ -25,7 +25,7 @@ import qiangyt.springboot_example.common.misc.StringHelper;
 public class JacksonHelper {
 
   public final ObjectMapper mapper;
-  
+
   public JacksonHelper(ObjectMapper mapper) {
     this.mapper = mapper;
   }
@@ -75,7 +75,7 @@ public class JacksonHelper {
     }
 
     for (int i = 0; i < textArray.length; i++) {
-      var text = textArray[i];
+      String text = textArray[i];
       result[i] = from(text, resultClazz);
     }
   }
