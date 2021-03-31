@@ -39,7 +39,7 @@
         <commons-configuration.version>1.9</commons-configuration.version>
         <commons-io.version>2.6</commons-io.version>
         <commons-vfs2.version>2.6.0</commons-vfs2.version>
-        <guava.version>28.1-jre</guava.version>
+        <guava.version>30.1.1-jre</guava.version>
         <io.jsonwebtoken.version>0.9.1</io.jsonwebtoken.version>
         <java-jwt.version>3.8.2</java-jwt.version>
         <javax.activation.version>1.1.1</javax.activation.version>
